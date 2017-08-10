@@ -25,7 +25,7 @@ class NavBar extends Component {
           <h3 className='mainNavItem'>Logo</h3>
         </Grid.Column>
         <Grid.Column>
-          <NavLink  className='mainNavItem' to="/favorites" ><h3 className='mainNavItem'>Favorites</h3></NavLink>
+          <NavLink  className='mainNavItem' to="/profile" ><h3 className='mainNavItem'>Profile</h3></NavLink>
         </Grid.Column>
       </Grid>
 
