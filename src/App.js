@@ -10,6 +10,7 @@ import LocationSearch from './components/LocationSearch'
 import LoginForm from './components/LoginForm'
 import AuthAdapter from './authAdapter'
 import Auth from './authorize'
+import AddNewMenuItem from './components/AddNewMenuItem'
 
 class App extends Component {
 
@@ -35,6 +36,7 @@ class App extends Component {
   isLoggedIn = () => !!window.localStorage.jwt
 
   componentWillMount(){
+
     console.log("setting id")
     if (localStorage.getItem('jwt')) {
       AuthAdapter.currentUser()
@@ -140,6 +142,7 @@ class App extends Component {
           <Route exact path="/nearby" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer currentAddress={this.state.auth.currentAddress}/>}/>
           <Route exact path="/search" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<LocationSearch setCurrentLocation={this.setCurrentLocation}/>} />
           <Route exact path="/profile" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<ProfileContainer onLogout={this.handleLogout}/>} />
+          <Route exact path="/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AddNewMenuItem />} />
           {/* <Route path="/" component={}/>
           <Route path="/" component={}/>
           <Route path="/" component={}/> */}

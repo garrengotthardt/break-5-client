@@ -27,12 +27,18 @@ class LocationSearch extends Component {
      onChange: this.onChange,
    }
 
+   const options = {
+     // location: new google.maps.LatLng(-34, 151),
+     // radius: 2000,
+     types: ['address']
+   }
+
     return(
       <Container>
         {this.state.redirect? <Redirect to='/nearby'/> : null }
         <h3>Enter your current location</h3>
         <Form onSubmit={this.handleFormSubmit}>
-        <PlacesAutocomplete inputProps={inputProps} />
+        <PlacesAutocomplete inputProps={inputProps} options={options} />
         <Button type="submit">Submit</Button>
       </Form>
 

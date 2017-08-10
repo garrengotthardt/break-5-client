@@ -26,7 +26,7 @@ class ResultsSubNav extends Component {
 
         </Grid.Column>
         <Grid.Column>
-          <Link to="/newListing">
+          <Link to="/new">
             <h5 className='mainNavItem'>New</h5>
           </Link>
         </Grid.Column>
