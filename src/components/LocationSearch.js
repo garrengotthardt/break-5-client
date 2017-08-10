@@ -1,0 +1,45 @@
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import { Container, Button, Checkbox, Form } from 'semantic-ui-react'
+
+class LocationSearch extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      address: '',
+      redirect: false
+    }
+  }
+  onChange = (address) => this.setState({ address })
+
+  handleFormSubmit = (event) => {
+    event.preventDefault()
+
+    this.props.setCurrentLocation(this.state.address)
+    this.setState({redirect:true})
+  }
+
+
+  render(){
+    const inputProps = {
+     value: this.state.address,
+     onChange: this.onChange,
+   }
+
+    return(
+      <Container>
+        {this.state.redirect? <Redirect to='/nearby'/> : null }
+        <h3>Enter your current location</h3>
+        <Form onSubmit={this.handleFormSubmit}>
+        <PlacesAutocomplete inputProps={inputProps} />
+        <Button type="submit">Submit</Button>
+      </Form>
+
+    </Container>
+
+    )
+  }
+}
+
+export default LocationSearch
