@@ -3,7 +3,6 @@ import ResultsSubNav from './ResultsSubNav'
 import ResultsList from './ResultsList'
 
 const ResultsContainer = (props) => {
-    console.log(props)
     return(
       <div>
         <ResultsSubNav />

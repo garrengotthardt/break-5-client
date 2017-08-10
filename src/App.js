@@ -18,48 +18,57 @@ class App extends Component {
 
     this.state = {
       auth: {
-        userEmail: ''
+        userID: null,
+        currentLat: null,
+        currentLong: null,
+        currentAddress: ''
       },
       allPlaces: [],
       currentPlaces: [],
       users: [],
-      currentAds: [],
       currentUserSaves: [],
       selectedPlace: {},
-      currentLat: null,
-      currentLong: null,
-      currentAddress: ''
+
     }
   }
 
   isLoggedIn = () => !!window.localStorage.jwt
 
-  componentDidMount(){
+  componentWillMount(){
+    console.log("setting id")
     if (localStorage.getItem('jwt')) {
       AuthAdapter.currentUser()
       .then(res => this.setState({
           auth: {
-           userEmail: res.email
+           userID: res.id,
+           currentLat: res.lat,
+           currentLong: res.long,
+           currentAddress: res.address
           },
         })
       )
-
-
-      fetch('http://localhost:3000/api/v1/users')
-       .then(data => data.json())
-       .then(users => users.filter(user => user.email === this.state.auth.userEmail))
-       .then(currentUser => console.log("currentUser after fetch", currentUser)
-      //    this.setState({
-      //    currentLat: currentUser.lat,
-      //    currentLong: currentUser.long,
-      //    currentAddress: currentUser.address
-      //  })
-     )
-
     }
-   }
+  }
 
-
+  setCurrentUserDetails = () => {
+  //   fetch(`http://localhost:3000/api/v1/users`)
+  //    .then(data => data.json())
+  //    .then(users => users.filter(user => user.id === this.state.auth.userID))
+  //    .then(currentUser =>  this.setState({
+  //      currentLat: currentUser[0].lat,
+  //      currentLong: currentUser[0].long,
+  //      currentAddress: currentUser[0].address
+  //    })
+  //  )
+   fetch(`http://localhost:3000/api/v1/users/${this.state.auth.userID}`)
+    .then(data => data.json())
+    .then(currentUser => this.setState({
+        currentLat: currentUser.lat,
+        currentLong: currentUser.long,
+        currentAddress: currentUser.address
+      })
+    )
+  }
 
   handleLogin = (loginParams) => {
     AuthAdapter.login(loginParams)
@@ -72,10 +81,9 @@ class App extends Component {
           localStorage.setItem('jwt', res.jwt)
           this.setState({
             auth:{
-              userEmail: res.email
+              userID: res.id
             }
           })
-          // this.context.router.history.push('/nearby')
         }
         //if error render login again
         //else set the jwt token and forward user to /giphs
@@ -86,25 +94,35 @@ class App extends Component {
     localStorage.clear()
     this.setState({
       auth: {
-        userEmail: ''
+        userID: ''
       }
     })
   }
 
 
   setCurrentLocation = (address) => {
-    geocodeByAddress(address)
-    .then(results => getLatLng(results[0]))
-    .then(latLng => this.setState({
-      currentLat: latLng.lat,
-      currentLong: latLng.lng
-    }))
 
     geocodeByAddress(address)
-    .then(results => results[0].formatted_address)
-    .then(currentAddress => this.setState({
-      currentAddress: currentAddress
+    .then(results => {
+      this.setState({
+        auth:{
+          ...this.state.auth,
+          currentAddress: results[0].formatted_address
+        }
+      })
+      //ADD POST REQUEST TO DATABASE TO UPDATE CURRENT USER ADDRESS
+      return getLatLng(results[0])
+    })
+    .then(latLng => this.setState({
+      auth:{
+        ...this.state.auth,
+        currentLat: latLng.lat,
+        currentLong: latLng.lng
+      }
+
+      //ADD POST REQUEST TO DATABASE TO UPDATE CURRENT USER LAT/LONG
     }))
+
   }
 
 
@@ -112,13 +130,14 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.auth.userEmail)
+    console.log(this.state.auth.userID)
+    this.state.auth.userID !== null && this.state.currentAddress === '' ? this.setCurrentUserDetails() : null
     return (
       <Router>
         <div>
           <Route path="/" component={NavBar}/>
           <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/nearby"/> : <LoginForm onLogin={this.handleLogin}/> } />
-          <Route exact path="/nearby" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer currentAddress={this.state.currentAddress}/>}/>
+          <Route exact path="/nearby" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer currentAddress={this.state.auth.currentAddress}/>}/>
           <Route exact path="/search" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<LocationSearch setCurrentLocation={this.setCurrentLocation}/>} />
           <Route exact path="/profile" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<ProfileContainer onLogout={this.handleLogout}/>} />
           {/* <Route path="/" component={}/>
