@@ -17,7 +17,10 @@ class AddNewMenuItem extends Component {
         google_places_id: '',
         newMenuItem: {
           name: '',
-          size: '',
+          // category: ''
+        },
+        newMenuItemVariations: {
+          variation: '',
           price: null
         }
       }
@@ -70,7 +73,7 @@ class AddNewMenuItem extends Component {
   //   })
   // }
 
-  onMenuItemVariationChange = (event) => {
+  onMenuItemChange = (event) => {
     let key = `${event.target.name}`
     let value = `${event.target.value}`
     console.log("event", event)
@@ -88,17 +91,35 @@ class AddNewMenuItem extends Component {
     })
   }
 
+  onMenuItemVariationChange = (event) => {
+    let key = `${event.target.name}`
+    let value = `${event.target.value}`
+    console.log("event", event)
+    console.log("key",key)
+    console.log("value",value)
+    this.setState({
+      selectedEstablishment: {
+        ...this.state.selectedEstablishment,
+        newMenuItemVariations: {
+          ...this.state.selectedEstablishment.newMenuItemVariations,
+          [key]: value
+        }
+      }
+
+    })
+  }
+
   handleAddItem = (event) => {
     event.preventDefault()
     console.log(this.state.selectedEstablishment)
-    // fetch('http://localhost:3000/api/v1/places', {
-    //   method: 'POST',
-    //   body: JSON.stringify(this.state.selectedEstablishment),
-    //   headers: {
-    //     'content-type': 'application/json',
-    //     'accept': 'application/json',
-    //   }
-    // })
+    fetch('http://localhost:3000/api/v1/create_nested', {
+      method: 'POST',
+      body: JSON.stringify(this.state.selectedEstablishment),
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      }
+    })
     // .then(() => this.props.handlePost()) PASS UP TO APP TO REFETCH ALL RESTAURANTS/MENU ITEMS FOR STATE
   }
 
@@ -131,8 +152,8 @@ class AddNewMenuItem extends Component {
    const menuItemForm = (<div><h3>Add menu items for {this.state.address}:</h3>
        <Form onSubmit={this.handleAddItem}>
         <Form.Group>
-          <Form.Input label='Item Name' placeholder='Enter Item Name' name="name" width={7} onChange={this.onMenuItemVariationChange} />
-          <Form.Input label='Item Size (optional)' placeholder='' name="size" width={4} onChange={this.onMenuItemVariationChange} />
+          <Form.Input label='Item Name' placeholder='Enter Item Name' name="name" width={7} onChange={this.onMenuItemChange} />
+          <Form.Input label='Item Size (optional)' placeholder='' name="variation" width={4} onChange={this.onMenuItemVariationChange} />
           <Form.Input label='Price' type='number' step="any" placeholder='price' name="price" width={3} onChange={this.onMenuItemVariationChange}/>
         </Form.Group>
         <Button size='mini' disabled onClick={this.addAdditionalPrice}>Add Variation</Button>

@@ -22,7 +22,7 @@ class ResultsSubNav extends Component {
           </Link>
         </Grid.Column>
         <Grid.Column width={8}>
-          <h5 className='mainNavItem'><Link to="/">List</Link> / <Link to="/list/map">Map</Link></h5>
+          <h5 className='mainNavItem'><span onClick={() => this.props.handleResultsDisplayChange()}>List</span> / <span name='map' onClick={() => this.props.handleResultsDisplayChange()}>Map</span></h5>
 
         </Grid.Column>
         <Grid.Column>
