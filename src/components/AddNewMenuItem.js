@@ -33,8 +33,6 @@ class AddNewMenuItem extends Component {
   handleEstablishmentSelect = (event) => {
     event.preventDefault()
 
-    console.log(this.state.address)
-
     geocodeByAddress(this.state.address)
     .then(results => {
       this.setState({
@@ -94,9 +92,6 @@ class AddNewMenuItem extends Component {
   onMenuItemVariationChange = (event) => {
     let key = `${event.target.name}`
     let value = `${event.target.value}`
-    console.log("event", event)
-    console.log("key",key)
-    console.log("value",value)
     this.setState({
       selectedEstablishment: {
         ...this.state.selectedEstablishment,
@@ -111,7 +106,6 @@ class AddNewMenuItem extends Component {
 
   handleAddItem = (event) => {
     event.preventDefault()
-    console.log(this.state.selectedEstablishment)
     fetch('http://localhost:3000/api/v1/create_nested', {
       method: 'POST',
       body: JSON.stringify(this.state.selectedEstablishment),
@@ -126,8 +120,6 @@ class AddNewMenuItem extends Component {
 
 
   render(){
-
-    console.log("currentState", this.state)
 
     const inputProps = {
      value: this.state.address,

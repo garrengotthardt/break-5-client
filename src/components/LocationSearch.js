@@ -7,10 +7,18 @@ class LocationSearch extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: '',
+      address: this.props.currentLocation,
       redirect: false
     }
   }
+
+  componentWillReceiveProps(nextProps){
+    this.setState ({
+      address: nextProps.currentLocation
+    })
+  }
+
+
   onChange = (address) => this.setState({ address })
 
   handleFormSubmit = (event) => {
@@ -35,7 +43,7 @@ class LocationSearch extends Component {
 
     return(
       <Container>
-        {this.state.redirect? <Redirect to='/nearby'/> : null }
+        {this.state.redirect? <Redirect to='/places/map'/> : null }
         <h3>Enter your current location</h3>
         <Form onSubmit={this.handleFormSubmit}>
         <PlacesAutocomplete inputProps={inputProps} options={options} />

@@ -18,7 +18,7 @@ class ResultsMap extends Component {
     return (
       <Container style={{width: '100%', height: '400px'}}>
       <GoogleMapReact
-        defaultCenter={{lat: 40.6660731, lng: -73.9840833}}
+        center={{lat: 40.6660731, lng: -73.9840833}}
         defaultZoom={11}
       >
 
@@ -26,7 +26,7 @@ class ResultsMap extends Component {
           lat={this.props.currentUserLat}
           lng={this.props.currentUserLong}
           text='your set location'
-          linkTo={`/search`}
+          linkTo={`/places/search`}
           icon='target'
         />
 
