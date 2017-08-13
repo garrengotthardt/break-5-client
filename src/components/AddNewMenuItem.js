@@ -60,17 +60,6 @@ class AddNewMenuItem extends Component {
 
   // MENU ITEM FORM FUNCTIONS
 
-  // onMenuItemChange = (event) => {
-  //   let key = `${event.target.name}`
-  //   let value = `${event.target.value}`
-  //   console.log("event", event)
-  //   console.log("key",key)
-  //   console.log("value",value)
-  //   this.setState({
-  //     [key]: value
-  //   })
-  // }
-
   onMenuItemChange = (event) => {
     let key = `${event.target.name}`
     let value = `${event.target.value}`

@@ -23,7 +23,7 @@ class ResultsSubNav extends Component {
           </NavLink>
         </Grid.Column>
         <Grid.Column width={8}>
-          <h5 className='mainNavItem'><NavLink to='/places/list'>List</NavLink> / <NavLink to='/places/map'>Map</NavLink></h5>
+          <h5 className='mainNavItem'><NavLink to='/places/map'>Map</NavLink> / <NavLink to='/places/list'>List</NavLink> </h5>
 
         </Grid.Column>
         <Grid.Column>

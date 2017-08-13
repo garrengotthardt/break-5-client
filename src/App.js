@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Redirect, Link, Switch} from 'react-router-dom'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import matrix from 'google-distance-matrix';
 import NavBar from './components/NavBar'
 import ResultsContainer from './components/ResultsContainer'
 import ProfileContainer from './components/ProfileContainer'
@@ -28,6 +29,7 @@ class App extends Component {
         currentAddress: ''
       },
       allPlaces: [],
+      sortedPlaces: [],
       currentPlace: {},
       // currentPlaces: [],
       // users: [],
@@ -86,6 +88,21 @@ class App extends Component {
           }
         })
     }
+
+
+    // ATTEMPT AT DISTANCE SORTING
+    // if (this.state.auth.currentLat !== null && this.state.allPlaces !== []){
+      // var distance = require('google-distance-matrix');
+      // distance.key('AIzaSyA1zRQuw4cXyTIcxx5Hi2zJr9qQwHjF4Ls');
+      // var origins = ['San Francisco CA'];
+      // var destinations = ['New York NY', '41.8337329,-87.7321554'];
+      //
+      // distance.matrix(origins, destinations, function (err, distances) {
+      //   if (!err)
+      //     console.log(distances);
+      //   })
+    // }
+
   }
 
 
@@ -121,7 +138,6 @@ class App extends Component {
 
 
   setCurrentLocation = (address) => {
-
     geocodeByAddress(address)
     .then(results => {
       this.setState({
@@ -130,7 +146,6 @@ class App extends Component {
           currentAddress: results[0].formatted_address
         }
       })
-      //ADD POST REQUEST TO DATABASE TO UPDATE CURRENT USER ADDRESS
       return getLatLng(results[0])
     })
     .then(latLng => this.setState({
@@ -140,7 +155,6 @@ class App extends Component {
         currentLong: latLng.lng
       }
     }))
-
   }
 
 
@@ -155,6 +169,7 @@ class App extends Component {
 
   render() {
     console.log("app state",this.state)
+
     this.state.auth.userID !== null && this.state.currentAddress === '' ? this.setCurrentUserDetails() : null
     return (
       <Router>
