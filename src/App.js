@@ -54,14 +54,14 @@ class App extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log("componentWillReceiveProps", nextProps)
-  }
-
-  shouldComponentUpdate(nextProps, nextState){
-    console.log("shouldComponentUpdate", nextProps, nextState)
-    return true;
-  }
+  // componentWillReceiveProps(nextProps){
+  //   console.log("componentWillReceiveProps", nextProps)
+  // }
+  //
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log("shouldComponentUpdate", nextProps, nextState)
+  //   return true;
+  // }
 
 
 
@@ -72,25 +72,22 @@ class App extends Component {
      )
   }
 
-  // setCurrentUserDetails = () => {
-  // //   fetch(`http://localhost:3000/api/v1/users`)
-  // //    .then(data => data.json())
-  // //    .then(users => users.filter(user => user.id === this.state.auth.userID))
-  // //    .then(currentUser =>  this.setState({
-  // //      currentLat: currentUser[0].lat,
-  // //      currentLong: currentUser[0].long,
-  // //      currentAddress: currentUser[0].address
-  // //    })
-  // //  )
-  //  fetch(`http://localhost:3000/api/v1/users/${this.state.auth.userID}`)
-  //   .then(data => data.json())
-  //   .then(currentUser => this.setState({
-  //       currentAddress: currentUser.address,
-  //       currentLat: currentUser.lat,
-  //       currentLong: currentUser.long
-  //     })
-  //   )
-  // }
+  componentDidUpdate(prevProps, prevState){
+    console.log("did update - previous state address:",prevState.auth.currentAddress, "current state address:", this.state.auth.currentAddress)
+    if (prevState.auth.currentLat !== this.state.auth.currentLat || prevState.auth.currentAddress !== this.state.auth.currentAddress){
+      console.log("GOT HERE")
+      fetch(`http://localhost:3000/api/v1/users/${this.state.auth.userID}`, {
+          method: 'PUT',
+          body: JSON.stringify({address: `${this.state.auth.currentAddress}`, lat: `${this.state.auth.currentLat}`, long: `${this.state.auth.currentLong}`}),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+            'Authorization': localStorage.getItem('jwt')
+          }
+        })
+    }
+  }
+
 
   handleLogin = (loginParams) => {
     AuthAdapter.login(loginParams)
@@ -144,17 +141,6 @@ class App extends Component {
       }
     }))
 
-
-    fetch(`http://localhost:3000/api/v1/users/${this.state.auth.userID}`, {
-        method: 'PUT',
-        body: JSON.stringify({address: `${this.state.auth.currentAddress}`, lat: `${this.state.auth.currentLat}`, long: `${this.state.auth.currentLong}`}),
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json',
-          'Authorization': localStorage.getItem('jwt')
-        }
-      })
-
   }
 
 
@@ -187,8 +173,9 @@ class App extends Component {
 
             <Route exact path="/places/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AddNewMenuItem />} />
 
-            <Route exact path="/places/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <PlaceContainer currentPlace={this.state.currentPlace} /> } />
+            <Route path="/places/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <PlaceContainer currentPlace={this.state.currentPlace} /> } />
           </Switch>
+
 
           <Route exact path="/profile" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<ProfileContainer onLogout={this.handleLogout}/>} />
 

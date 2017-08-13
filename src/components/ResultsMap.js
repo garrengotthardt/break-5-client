@@ -18,7 +18,7 @@ class ResultsMap extends Component {
     return (
       <Container style={{width: '100%', height: '400px'}}>
       <GoogleMapReact
-        center={{lat: 40.6660731, lng: -73.9840833}}
+        center={{lat: this.props.currentUserLat, lng: this.props.currentUserLong}}
         defaultZoom={11}
       >
 
