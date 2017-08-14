@@ -9,6 +9,7 @@ import ResultsContainer from './components/ResultsContainer'
 import ProfileContainer from './components/ProfileContainer'
 import LocationSearch from './components/LocationSearch'
 import LoginForm from './components/LoginForm'
+import SignUpForm from './components/SignUpForm'
 import AuthAdapter from './authAdapter'
 import Auth from './authorize'
 import AddNewMenuItem from './components/AddNewMenuItem'
@@ -40,6 +41,9 @@ class App extends Component {
   isLoggedIn = () => !!window.localStorage.jwt
 
   componentWillMount(){
+
+
+    // SETTING CURRENT USER
 
     console.log("setting id")
     if (localStorage.getItem('jwt')) {
@@ -176,6 +180,8 @@ class App extends Component {
         <div>
           <Route path="/" component={NavBar}/>
           <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/places/list"/> : <LoginForm onLogin={this.handleLogin}/> } />
+
+          <Route path="/signup" render={()=> <SignUpForm setCurrentUser={this.setCurrentUser}/>} />
 
           <Route path="/places" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer currentAddress={this.state.auth.currentAddress} currentUserLat={this.state.auth.currentLat} currentUserLong={this.state.auth.currentLong} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
