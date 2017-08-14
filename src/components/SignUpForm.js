@@ -28,16 +28,14 @@ class SignUpForm extends Component {
       body: JSON.stringify(this.state),
       headers: {
         'content-type': 'application/json',
-        'accept': 'application/json',
-        // 'Authorization': localStorage.getItem('jwt')
+        'accept': 'application/json'
       }
     })
-    // .then(res => res.json())
-    // .then(json => {
-    //   console.log("json resp", json);
-    //   this.props.setCurrentUser(json.user)
-    // })
-    // this.setState({ redirect: true })
+    .then(res => res.json())
+    .then(res => {
+      localStorage.setItem('jwt', res.jwt)
+      this.setState({redirect: true})
+    })
   }
 
   handleChange = (event) => {
@@ -57,7 +55,7 @@ class SignUpForm extends Component {
     console.log(this.state.user);
     return (
       <Container>
-        {this.state.redirect? <Redirect to="/ads"/> : null }
+        {this.state.redirect? <Redirect to="/places/search"/> : null }
         <h1>Sign Up</h1>
         <Form size='large' id='signup-form' onSubmit={this.handleSubmit}>
           <Form.Field name="first_name" label='First name' control='input' placeholder='First name' onChange={this.handleChange}/>
