@@ -24,10 +24,12 @@ class App extends Component {
 
     this.state = {
       auth: {
-        userID: null,
-        currentLat: null,
-        currentLong: null,
-        currentAddress: ''
+        user: {
+          id: null,
+          lat: null,
+          long: null,
+          address: ''
+        }
       },
       allPlaces: [],
       sortedPlaces: [],
@@ -50,10 +52,12 @@ class App extends Component {
       AuthAdapter.currentUser()
       .then(res => this.setState({
           auth: {
-            currentAddress: res.address,
-            userID: res.id,
-            currentLat: res.lat,
-            currentLong: res.long
+            user: {
+            address: res.address,
+            id: res.id,
+            lat: res.lat,
+            long: res.long
+          }
           },
         })
       )
@@ -79,12 +83,12 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    console.log("did update - previous state address:",prevState.auth.currentAddress, "current state address:", this.state.auth.currentAddress)
-    if (prevState.auth.currentLat !== this.state.auth.currentLat || prevState.auth.currentAddress !== this.state.auth.currentAddress){
+    console.log("did update - previous state address:",prevState.auth.user.address, "current state address:", this.state.auth.user.address)
+    if (prevState.auth.user.lat !== this.state.auth.user.lat || prevState.auth.user.address !== this.state.auth.user.address){
       console.log("GOT HERE")
-      fetch(`http://localhost:3000/api/v1/users/${this.state.auth.userID}`, {
+      fetch(`http://localhost:3000/api/v1/users/${this.state.auth.user.id}`, {
           method: 'PUT',
-          body: JSON.stringify({address: `${this.state.auth.currentAddress}`, lat: `${this.state.auth.currentLat}`, long: `${this.state.auth.currentLong}`}),
+          body: JSON.stringify(this.state.auth),
           headers: {
             'content-type': 'application/json',
             'accept': 'application/json',
@@ -95,7 +99,7 @@ class App extends Component {
 
 
     // ATTEMPT AT DISTANCE SORTING
-    // if (this.state.auth.currentLat !== null && this.state.allPlaces !== []){
+    // if (this.state.auth.lat !== null && this.state.allPlaces !== []){
       // var distance = require('google-distance-matrix');
       // distance.key('AIzaSyA1zRQuw4cXyTIcxx5Hi2zJr9qQwHjF4Ls');
       // var origins = ['San Francisco CA'];
@@ -121,8 +125,10 @@ class App extends Component {
           localStorage.setItem('jwt', res.jwt)
           this.setState({
             auth:{
-              ...this.state.auth,
-              userID: res.id
+              user: {
+              ...this.state.auth.user,
+              id: res.id
+              }
             }
           })
         }
@@ -135,7 +141,10 @@ class App extends Component {
     localStorage.clear()
     this.setState({
       auth: {
-        userID: ''
+        user: {
+          ...this.state.auth.user,
+          id: ''
+        }
       }
     })
   }
@@ -146,17 +155,21 @@ class App extends Component {
     .then(results => {
       this.setState({
         auth:{
-          ...this.state.auth,
-          currentAddress: results[0].formatted_address
+          user:{
+            ...this.state.auth.user,
+            address: results[0].formatted_address
+          }
         }
       })
       return getLatLng(results[0])
     })
     .then(latLng => this.setState({
       auth:{
-        ...this.state.auth,
-        currentLat: latLng.lat,
-        currentLong: latLng.lng
+        user:{
+          ...this.state.auth.user,
+          lat: latLng.lat,
+          long: latLng.lng
+        }
       }
     }))
   }
@@ -174,7 +187,7 @@ class App extends Component {
   render() {
     console.log("app state",this.state)
 
-    this.state.auth.userID !== null && this.state.currentAddress === '' ? this.setCurrentUserDetails() : null
+    // this.state.auth.user.id !== null && this.state.auth.user.address === '' ? this.setCurrentUserDetails() : null
     return (
       <Router>
         <div>
@@ -183,14 +196,14 @@ class App extends Component {
 
           <Route path="/signup" render={()=> <SignUpForm setCurrentUser={this.setCurrentUser}/>} />
 
-          <Route path="/places" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer currentAddress={this.state.auth.currentAddress} currentUserLat={this.state.auth.currentLat} currentUserLong={this.state.auth.currentLong} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+          <Route path="/places" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
           <Switch>
-            <Route exact path="/places/map" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsMap currentAddress={this.state.auth.currentAddress} currentUserLat={this.state.auth.currentLat} currentUserLong={this.state.auth.currentLong} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+            <Route exact path="/places/map" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsMap address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
-            <Route exact path="/places/list" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsList currentAddress={this.state.auth.currentAddress} currentUserLat={this.state.auth.currentLat} currentUserLong={this.state.auth.currentLong} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+            <Route exact path="/places/list" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsList address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
-            <Route exact path="/places/search" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<LocationSearch currentLocation={this.state.auth.currentAddress} setCurrentLocation={this.setCurrentLocation}/>} />
+            <Route exact path="/places/search" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<LocationSearch currentLocation={this.state.auth.user.address} setCurrentLocation={this.setCurrentLocation}/>} />
 
             <Route exact path="/places/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AddNewMenuItem />} />
 

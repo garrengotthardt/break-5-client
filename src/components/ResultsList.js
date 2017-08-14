@@ -5,7 +5,7 @@ import { Item } from 'semantic-ui-react'
 const ResultsList = (props) => {
     return(
       <div>
-      <p>Displaying Results Near: {props.currentAddress}</p>
+      <p>Displaying Results Near: {props.address}</p>
       <Item.Group divided>
         {props.allPlaces.map(place => (<ResultListItem place={place} handleCurrentPlaceSelect={props.handleCurrentPlaceSelect}/>))}
       </Item.Group>
