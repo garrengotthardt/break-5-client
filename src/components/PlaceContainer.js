@@ -11,10 +11,10 @@ class PlaceContainer extends Component {
 
     this.state = {
       id: window.location.pathname.slice(8),
-      name: this.props.currentPlace.name,
-      address: this.props.currentPlace.address,
+      name: '',
+      address: '',
       menuItems: [],
-      google_places_id: this.props.currentPlace.google_places_ids
+      google_places_id: ''
     }
 
   }

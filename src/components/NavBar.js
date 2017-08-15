@@ -17,7 +17,7 @@ class NavBar extends Component {
     return(
       <Grid columns='equal'>
         <Grid.Column>
-          <NavLink to="/places">
+          <NavLink to="/places/map">
           <h3 className='mainNavItem'>Places</h3>
           </NavLink>
         </Grid.Column>

@@ -8,16 +8,16 @@ export default function (Component, inheritedProps) {
     }
     componentDidMount () {
       if(!localStorage.getItem('jwt')){
-        this.context.router.history.push('/')
+        this.context.router.history.push('/login')
       }
     }
     componentWillUpdate () {
       if(!localStorage.getItem('jwt')){
-        this.context.router.history.push('/')
+        this.context.router.history.push('/login')
       }
     }
     render(){
-      return <Component  {...this.props} />
+      return <Component  {...inheritedProps} />
     }
   }
 

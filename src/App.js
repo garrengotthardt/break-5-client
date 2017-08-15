@@ -39,11 +39,9 @@ class App extends Component {
     }
   }
 
-  isLoggedIn = () => !!window.localStorage.jwt
+  // isLoggedIn = () => !!window.localStorage.jwt
 
   componentWillMount(){
-
-
     // SETTING CURRENT USER
     console.log("setting id")
     if (localStorage.getItem('jwt')) {
@@ -61,6 +59,7 @@ class App extends Component {
         })
       )
     }
+
   }
 
   // componentWillReceiveProps(nextProps){
@@ -117,11 +116,11 @@ class App extends Component {
           localStorage.setItem('jwt', res.jwt)
           this.setState({
             auth:{
+              isLoggedIn: true,
               user: {
               ...this.state.auth.user,
               id: res.id
-            },
-            isLoggedIn: true
+              }
             }
           })
         }
@@ -137,11 +136,11 @@ class App extends Component {
       localStorage.setItem('jwt', res.jwt)
       this.setState({
         auth:{
+          isLoggedIn: true,
           user: {
           ...this.state.auth.user,
           id: res.id
-          },
-          isLoggedIn: true
+          }
         }
       })
     })
@@ -155,7 +154,8 @@ class App extends Component {
         user: {
           ...this.state.auth.user,
           id: ''
-        }
+        },
+        isLoggedIn: false
       }
     })
   }
@@ -164,8 +164,10 @@ class App extends Component {
   setCurrentLocation = (address) => {
     geocodeByAddress(address)
     .then(results => {
+      console.log("geocode by address results", results)
       this.setState({
         auth:{
+          ...this.state.auth,
           user:{
             ...this.state.auth.user,
             address: results[0].formatted_address
@@ -176,6 +178,7 @@ class App extends Component {
     })
     .then(latLng => this.setState({
       auth:{
+        ...this.state.auth,
         user:{
           ...this.state.auth.user,
           lat: latLng.lat,
@@ -203,22 +206,23 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <ResultsContainer address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+          <Route path="/places" component={Auth(ResultsContainer, {address: this.state.auth.user.address, currentUserLat: this.state.auth.user.lat, currentUserLong: this.state.auth.user.long, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect} )}/>
 
           <Switch>
-            <Route exact path="/places/map" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <ResultsMap address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
-            <Route exact path="/places/list" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <ResultsList address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+            <Route path="/places/map" component={Auth(ResultsMap, {address: this.state.auth.user.address, currentUserLat: this.state.auth.user.lat, currentUserLong: this.state.auth.user.long, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect} )}/>
 
-            <Route exact path="/places/search" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> :<LocationSearch currentLocation={this.state.auth.user.address} setCurrentLocation={this.setCurrentLocation}/>} />
+            <Route path="/places/list" component={Auth(ResultsList, {address: this.state.auth.user.address, currentUserLat: this.state.auth.user.lat, currentUserLong: this.state.auth.user.long, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect} )}/>
 
-            <Route exact path="/places/new" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> :<AddNewMenuItem />} />
+            <Route path="/places/search" component={Auth(LocationSearch, {currentLocation: this.state.auth.user.address, setCurrentLocation: this.setCurrentLocation} )}/>
 
-            <Route path="/places/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <PlaceContainer currentPlace={this.state.currentPlace} /> } />
+            <Route path="/places/new" component={Auth(AddNewMenuItem)}/>
+
+            <Route path="/places/:id" component={Auth(PlaceContainer)}/>
+
           </Switch>
 
-
-          <Route exact path="/profile" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> :<ProfileContainer onLogout={this.handleLogout}/>} />
+          <Route path="/profile" component={ Auth( ProfileContainer , {onLogout: this.handleLogout})} />
 
         </div>
       </Router>

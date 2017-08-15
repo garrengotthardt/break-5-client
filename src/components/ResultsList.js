@@ -1,16 +1,18 @@
-import React from 'react'
+import React, {Component} from 'react'
 import ResultListItem from './ResultListItem'
 import { Item } from 'semantic-ui-react'
 
-const ResultsList = (props) => {
+class ResultsList extends Component {
+  render(){
     return(
       <div>
-      <p>Displaying Results Near: {props.address}</p>
+      <p>Displaying Results Near: {this.props.address}</p>
       <Item.Group divided>
-        {props.allPlaces.map(place => (<ResultListItem place={place} handleCurrentPlaceSelect={props.handleCurrentPlaceSelect}/>))}
+        {this.props.allPlaces.map(place => (<ResultListItem place={place} handleCurrentPlaceSelect={this.props.handleCurrentPlaceSelect}/>))}
       </Item.Group>
     </div>
     )
+  }
 }
 
 export default ResultsList
