@@ -11,6 +11,7 @@ import LocationSearch from './components/LocationSearch'
 import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
 import AuthAdapter from './authAdapter'
+import { getPlaces } from './apiAdapter'
 import Auth from './authorize'
 import AddNewMenuItem from './components/AddNewMenuItem'
 import PlaceContainer from './components/PlaceContainer'
@@ -74,10 +75,8 @@ class App extends Component {
 
 
   componentDidMount(){
-    fetch(`http://localhost:3000/api/v1/places`)
-     .then(data => data.json())
-     .then(allPlaces => this.setState({ allPlaces })
-     )
+    getPlaces()
+     .then(allPlaces => this.setState({ allPlaces }) )
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -222,7 +221,7 @@ class App extends Component {
 
           </Switch>
 
-          <Route path="/profile" component={ Auth( ProfileContainer , {onLogout: this.handleLogout})} />
+          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
 
         </div>
       </Router>
