@@ -9,11 +9,29 @@ export default class AuthAdapter {
     }).then(res => res.json())
   }
 
+  static signup (signupParams) {
+   return fetch(`${baseUrl}/signup`, {
+     method: 'POST',
+     headers: headers(),
+     body: JSON.stringify(signupParams)
+   }).then(res => res.json())
+ }
+
   static currentUser () {
     return fetch(`${baseUrl}/me`, {
       headers: headers()
     }).then(res => res.json())
   }
+
+  static updateCurrentUser (authState) {
+    return fetch(`${baseUrl}/users/${authState.user.id}`, {
+      method: 'PUT',
+      headers: headers(),
+      body: JSON.stringify(authState)
+    }).then(res => res.json())
+  }
+
+
 }
 
 function headers () {

@@ -29,13 +29,12 @@ class App extends Component {
           lat: null,
           long: null,
           address: ''
-        }
+        },
+        isLoggedIn: false
       },
       allPlaces: [],
       sortedPlaces: [],
       currentPlace: {},
-      // currentPlaces: [],
-      // users: [],
       currentUserSaves: []
     }
   }
@@ -46,7 +45,6 @@ class App extends Component {
 
 
     // SETTING CURRENT USER
-
     console.log("setting id")
     if (localStorage.getItem('jwt')) {
       AuthAdapter.currentUser()
@@ -57,7 +55,8 @@ class App extends Component {
             id: res.id,
             lat: res.lat,
             long: res.long
-          }
+          },
+          isLoggedIn: true
           },
         })
       )
@@ -86,15 +85,8 @@ class App extends Component {
     console.log("did update - previous state address:",prevState.auth.user.address, "current state address:", this.state.auth.user.address)
     if (prevState.auth.user.lat !== this.state.auth.user.lat || prevState.auth.user.address !== this.state.auth.user.address){
       console.log("GOT HERE")
-      fetch(`http://localhost:3000/api/v1/users/${this.state.auth.user.id}`, {
-          method: 'PUT',
-          body: JSON.stringify(this.state.auth),
-          headers: {
-            'content-type': 'application/json',
-            'accept': 'application/json',
-            'Authorization': localStorage.getItem('jwt')
-          }
-        })
+      AuthAdapter.updateCurrentUser(this.state.auth)
+      .then(res => console.log("response from updating user's address/lat/long", res))
     }
 
 
@@ -128,7 +120,8 @@ class App extends Component {
               user: {
               ...this.state.auth.user,
               id: res.id
-              }
+            },
+            isLoggedIn: true
             }
           })
         }
@@ -138,15 +131,7 @@ class App extends Component {
   }
 
   handleSignup = (signupParams) => {
-    fetch('http://localhost:3000/api/v1/signup', {
-      method: 'POST',
-      body: JSON.stringify(signupParams),
-      headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-      }
-    })
-    .then(res => res.json())
+    AuthAdapter.signup(signupParams)
     .then(res => {
       console.log("signup json response", res)
       localStorage.setItem('jwt', res.jwt)
@@ -155,7 +140,8 @@ class App extends Component {
           user: {
           ...this.state.auth.user,
           id: res.id
-          }
+          },
+          isLoggedIn: true
         }
       })
     })
@@ -206,38 +192,33 @@ class App extends Component {
   }
 
 
-
-
-
   render() {
     console.log("app state",this.state)
-
-    // this.state.auth.user.id !== null && this.state.auth.user.address === '' ? this.setCurrentUserDetails() : null
     return (
       <Router>
         <div>
           <Route path="/" component={NavBar}/>
 
-          <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/profile"/> : <LoginForm onLogin={this.handleLogin}/> } />
+          <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/profile"/> : <LoginForm onLogin={this.handleLogin}/> } />
 
-          <Route path="/signup" render={()=> this.isLoggedIn() ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
+          <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+          <Route path="/places" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <ResultsContainer address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
           <Switch>
-            <Route exact path="/places/map" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsMap address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+            <Route exact path="/places/map" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <ResultsMap address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
-            <Route exact path="/places/list" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsList address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
+            <Route exact path="/places/list" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <ResultsList address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
-            <Route exact path="/places/search" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<LocationSearch currentLocation={this.state.auth.user.address} setCurrentLocation={this.setCurrentLocation}/>} />
+            <Route exact path="/places/search" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> :<LocationSearch currentLocation={this.state.auth.user.address} setCurrentLocation={this.setCurrentLocation}/>} />
 
-            <Route exact path="/places/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AddNewMenuItem />} />
+            <Route exact path="/places/new" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> :<AddNewMenuItem />} />
 
-            <Route path="/places/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <PlaceContainer currentPlace={this.state.currentPlace} /> } />
+            <Route path="/places/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <PlaceContainer currentPlace={this.state.currentPlace} /> } />
           </Switch>
 
 
-          <Route exact path="/profile" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<ProfileContainer onLogout={this.handleLogout}/>} />
+          <Route exact path="/profile" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> :<ProfileContainer onLogout={this.handleLogout}/>} />
 
         </div>
       </Router>
