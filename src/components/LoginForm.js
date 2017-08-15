@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
-
+import { Container, Button, Form } from 'semantic-ui-react'
+import { Link} from 'react-router-dom'
 class LoginForm extends Component {
 
   constructor (props) {
@@ -27,6 +27,8 @@ class LoginForm extends Component {
 
   render () {
     return (
+      <Container>
+        <h1>Login</h1>
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
           <label>Username</label>
@@ -37,7 +39,9 @@ class LoginForm extends Component {
           <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
         </Form.Field>
         <Button type='submit'>Log In</Button>
+        Aren't signed up yet? <Link to='/signup'>Create an account here</Link>
       </Form>
+    </Container>
 
     )
   }

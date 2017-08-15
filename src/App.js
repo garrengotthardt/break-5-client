@@ -119,8 +119,8 @@ class App extends Component {
       .then( res => {
         //check for an error message
         if( res.error ){
-          console.log("do nothing")
-        }else{
+          console.log(res.error)
+        } else {
           console.log(res)
           localStorage.setItem('jwt', res.jwt)
           this.setState({
@@ -136,6 +136,31 @@ class App extends Component {
         //else set the jwt token and forward user to /giphs
       })
   }
+
+  handleSignup = (signupParams) => {
+    fetch('http://localhost:3000/api/v1/signup', {
+      method: 'POST',
+      body: JSON.stringify(signupParams),
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log("signup json response", res)
+      localStorage.setItem('jwt', res.jwt)
+      this.setState({
+        auth:{
+          user: {
+          ...this.state.auth.user,
+          id: res.id
+          }
+        }
+      })
+    })
+  }
+
 
   handleLogout = () => {
     localStorage.clear()
@@ -192,9 +217,10 @@ class App extends Component {
       <Router>
         <div>
           <Route path="/" component={NavBar}/>
-          <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/places/list"/> : <LoginForm onLogin={this.handleLogin}/> } />
 
-          <Route path="/signup" render={()=> <SignUpForm setCurrentUser={this.setCurrentUser}/>} />
+          <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/profile"/> : <LoginForm onLogin={this.handleLogin}/> } />
+
+          <Route path="/signup" render={()=> this.isLoggedIn() ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
           <Route path="/places" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <ResultsContainer address={this.state.auth.user.address} currentUserLat={this.state.auth.user.lat} currentUserLong={this.state.auth.user.long} allPlaces={this.state.allPlaces} handleCurrentPlaceSelect={this.handleCurrentPlaceSelect} />}/>
 
