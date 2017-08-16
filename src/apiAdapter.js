@@ -15,3 +15,11 @@ export const getPlaces = () => {
     headers: headers(),
   }).then(res => res.json()))
 }
+
+export const postNewItem = (selectedEstablishment) => {
+  return(fetch(`${BASE_URL}/create_nested`, {
+    method: 'POST',
+    body: JSON.stringify(selectedEstablishment),
+    headers: headers()
+  }).then(res => res.json()))
+}

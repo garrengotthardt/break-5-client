@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { Container, Button, Input, Form } from 'semantic-ui-react'
+import { postNewItem } from '../apiAdapter'
 
 class AddNewMenuItem extends Component {
   constructor(props) {
@@ -95,14 +96,7 @@ class AddNewMenuItem extends Component {
 
   handleAddItem = (event) => {
     event.preventDefault()
-    fetch('http://localhost:3000/api/v1/create_nested', {
-      method: 'POST',
-      body: JSON.stringify(this.state.selectedEstablishment),
-      headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json',
-      }
-    })
+    postNewItem(this.state.selectedEstablishment)
     // .then(() => this.props.handlePost()) PASS UP TO APP TO REFETCH ALL RESTAURANTS/MENU ITEMS FOR STATE
   }
 
