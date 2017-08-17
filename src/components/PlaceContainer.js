@@ -3,7 +3,7 @@ import { List } from 'semantic-ui-react'
 import ResultsSubNav from './ResultsSubNav'
 import ResultsList from './ResultsList'
 import MenuItem from './MenuItem'
-
+import { getPlace } from '../apiAdapter'
 
 class PlaceContainer extends Component {
   constructor(props){
@@ -21,8 +21,7 @@ class PlaceContainer extends Component {
 
   componentWillMount(){
     let currentID = window.location.pathname.slice(8)
-    fetch(`http://localhost:3000/api/v1/places/${this.state.id}`)
-    .then(data => data.json())
+    getPlace(currentID)
     .then(placeData => this.setState({
       name: placeData.name,
       address: placeData.address,

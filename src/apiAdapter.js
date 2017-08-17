@@ -16,6 +16,13 @@ export const getPlaces = () => {
   }).then(res => res.json()))
 }
 
+export const getPlace = (placeID) => {
+  return (fetch(`${BASE_URL}/places/${placeID}`, {
+    method: 'GET',
+    headers: headers(),
+  }).then(res => res.json()))
+}
+
 export const postNewItem = (selectedEstablishment) => {
   return(fetch(`${BASE_URL}/create_nested`, {
     method: 'POST',
