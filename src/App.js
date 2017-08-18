@@ -182,8 +182,7 @@ class App extends Component {
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
           <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation} )}/>
-
-
+          
           <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
 
         </div>
