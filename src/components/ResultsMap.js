@@ -3,29 +3,25 @@ import { Container } from 'semantic-ui-react'
 import GoogleMapReact from 'google-map-react';
 import PlaceMapPoint from './PlaceMapPoint'
 
-const Resultsmap = ({ text }) => <div>{text}</div>;
 
 class ResultsMap extends Component {
-  // static defaultProps = {
-  //   center: ,
-  //   zoom: 11
-  // };
   constructor(props){
     super(props)
   }
 
   render() {
-    console.log(this.props)
+    console.log("results map props",this.props)
     return (
       <Container style={{width: '100%', height: '90vh'}}>
+        <p>Displaying Results Near: {this.props.user.address}</p>
       <GoogleMapReact
-        center={{lat: this.props.currentUserLat, lng: this.props.currentUserLong}}
+        center={{lat: this.props.user.lat, lng: this.props.user.long}}
         defaultZoom={14}
       >
 
         <PlaceMapPoint
-          lat={this.props.currentUserLat}
-          lng={this.props.currentUserLong}
+          lat={this.props.user.lat}
+          lng={this.props.user.long}
           text='your set location'
           linkTo={`/places/search`}
           icon='target'

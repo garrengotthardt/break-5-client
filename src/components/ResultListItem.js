@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 const ResultListItem = (props) => {
     return(
-
       <Item onClick={() => props.handleCurrentPlaceSelect(props.place)}>
         <Item.Content verticalAlign='middle'>
           <Item.Header>
