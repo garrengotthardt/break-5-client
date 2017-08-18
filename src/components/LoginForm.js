@@ -30,7 +30,7 @@ class LoginForm extends Component {
         <h1>Login</h1>
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
-          <label>Username</label>
+          <label>Email</label>
           <input name='email' placeholder='Email' onChange={this.handleChange} />
         </Form.Field>
         <Form.Field>
