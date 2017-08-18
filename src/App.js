@@ -40,27 +40,10 @@ class App extends Component {
     }
   }
 
-  // isLoggedIn = () => !!window.localStorage.jwt
-
   componentWillMount(){
     // SETTING CURRENT USER
     console.log("setting id")
-    if (localStorage.getItem('jwt')) {
-      AuthAdapter.currentUser()
-      .then(res => this.setState({
-          auth: {
-            user: {
-            address: res.address,
-            id: res.id,
-            lat: res.lat,
-            long: res.long
-          },
-          isLoggedIn: true
-          },
-        })
-      )
-    }
-
+    this.getCurrentUser()
   }
 
   // componentWillReceiveProps(nextProps){
@@ -80,8 +63,12 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    console.log("did update - previous state address:",prevState.auth.user.address, "current state address:", this.state.auth.user.address)
-    if (prevState.auth.user.lat !== this.state.auth.user.lat || prevState.auth.user.address !== this.state.auth.user.address){
+    let prevLat = prevState.auth.user.lat
+    let currentLat = this.state.auth.user.lat
+    let prevAddress = prevState.auth.user.address
+    let currentAddress = this.state.auth.user.address
+
+    if (prevLat != null && prevLat !== currentLat || prevAddress != '' && prevAddress !== currentAddress){
       console.log("GOT HERE")
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => console.log("response from updating user's address/lat/long", res))
@@ -103,6 +90,24 @@ class App extends Component {
 
   }
 
+  getCurrentUser = () => {
+    if (localStorage.getItem('jwt')) {
+      AuthAdapter.currentUser()
+      .then(res => this.setState({
+          auth: {
+            user: {
+            address: res.address,
+            id: res.id,
+            lat: res.lat,
+            long: res.long
+            },
+          isLoggedIn: true
+          },
+        })
+      )
+    }
+  }
+
 
   handleLogin = (loginParams) => {
     AuthAdapter.login(loginParams)
@@ -111,17 +116,18 @@ class App extends Component {
         if( res.error ){
           console.log(res.error)
         } else {
-          console.log(res)
+          console.log("handle login res",res)
           localStorage.setItem('jwt', res.jwt)
-          this.setState({
-            auth:{
-              isLoggedIn: true,
-              user: {
-              ...this.state.auth.user,
-              id: res.id
-              }
-            }
-          })
+          this.getCurrentUser()
+          // this.setState({
+          //   auth:{
+          //     isLoggedIn: true,
+          //     user: {
+          //     ...this.state.auth.user,
+          //     id: res.id
+          //     }
+          //   }
+          // })
         }
         //if error render login again
         //else set the jwt token and forward user to /giphs
