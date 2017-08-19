@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Image, Icon } from 'semantic-ui-react'
 
 
 class NavBar extends Component {
@@ -15,21 +15,23 @@ class NavBar extends Component {
   render(){
 
     return(
-      <Grid columns='equal'>
-        <Grid.Column>
-          <NavLink to="/places/map">
-          <h3 className='mainNavItem'>Places</h3>
+      <div  className='mainNav'>
+        <Grid columns='equal' className='mainNavGrid'>
+          <Grid.Column>
+            <NavLink to="/places/map">
+            <Icon className="mainNavIcon" name='map outline' size='big'  />
+            </NavLink>
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <Image id='mainNavLogo' src='/break5logo_black.svg' />
+          </Grid.Column>
+          <Grid.Column>
+            <NavLink  className='mainNavItem' to="/profile" >
+            <Icon className="mainNavIcon"  name='user outline' size='big'  />
           </NavLink>
-        </Grid.Column>
-        <Grid.Column width={8}>
-          <h3 className='mainNavItem'>Logo</h3>
-        </Grid.Column>
-        <Grid.Column>
-          <NavLink  className='mainNavItem' to="/profile" ><h3 className='mainNavItem'>Profile</h3></NavLink>
-        </Grid.Column>
-      </Grid>
-
-
+          </Grid.Column>
+        </Grid>
+    </div>
     )}
 }
 

@@ -26,7 +26,7 @@ class LoginForm extends Component {
 
   render () {
     return (
-      <Container>
+      <Container text>
         <h1>Login</h1>
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>

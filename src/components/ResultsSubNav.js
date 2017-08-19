@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {Container, Row, Col} from 'react-grid-system'
-import { Link } from 'react-router-dom'
-import { Grid } from 'semantic-ui-react'
 import { NavLink } from  'react-router-dom'
+import { Container, Grid, Icon, Button } from 'semantic-ui-react'
 
 class ResultsSubNav extends Component {
   constructor(props){
@@ -16,23 +14,31 @@ class ResultsSubNav extends Component {
   render(){
 
     return(
-      <Grid columns='equal'>
-        <Grid.Column>
-          <NavLink to="/places/search">
-            <h5 className='mainNavItem'>Search</h5>
-          </NavLink>
-        </Grid.Column>
-        <Grid.Column width={8}>
-          <h5 className='mainNavItem'><NavLink to='/places/map'>Map</NavLink> / <NavLink to='/places/list'>List</NavLink> </h5>
+      <Container>
+        <Grid className='subNav' columns='equal'>
+          <Grid.Column>
+            <NavLink to="/places/search">
+              <Icon className='subNavIcon' name='search' size='large'  />
+            </NavLink>
+          </Grid.Column>
+          <Grid.Column width={8}>
 
-        </Grid.Column>
-        <Grid.Column>
-          <NavLink to="/places/new">
-            <h5 className='mainNavItem'>New</h5>
-          </NavLink>
-        </Grid.Column>
-      </Grid>
+            <Button.Group size='small' className='subNavButton'>
+              <NavLink to='/places/map'><Button basic color='black' size='small'>Map</Button></NavLink>
+              <NavLink to='/places/list'><Button basic color='black' size='small'>List</Button></NavLink>
+            </Button.Group>
 
+          </Grid.Column>
+          <Grid.Column>
+            <NavLink to="/places/new">
+              <Icon.Group className='subNavIcon' size='large'>
+                <Icon name='food' />
+                <Icon corner name='add' />
+              </Icon.Group>
+            </NavLink>
+          </Grid.Column>
+        </Grid>
+      </Container>
     )}
 }
 

@@ -172,19 +172,20 @@ class App extends Component {
     console.log("app state",this.state)
     return (
       <Router>
-        <div>
+        <div className='appContainer'>
           <Route path="/" component={NavBar}/>
 
           <Route exact path="/" render={()=> <Redirect to="/profile"/>}/>
+
+          <Route exact path="/places" render={()=> <Redirect to="/places/map"/>}/>
 
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/profile"/> : <LoginForm onLogin={this.handleLogin}/> } />
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
           <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation} )}/>
-          
-          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
 
+          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
         </div>
       </Router>
     );

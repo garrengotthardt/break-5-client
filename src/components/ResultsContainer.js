@@ -15,7 +15,7 @@ class ResultsContainer extends Component {
 
   render(){
     return(
-      <div>
+      <div className='pageContent'>
         <ResultsSubNav handleResultsDisplayChange={this.handleResultsDisplayChange}/>
 
         <Switch>

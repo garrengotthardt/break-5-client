@@ -11,7 +11,8 @@ class ResultsMap extends Component {
 
   render() {
     console.log("results map props",this.props)
-    return (
+    return(
+      <div className='pageContent'>
       <Container style={{width: '100%', height: '90vh'}}>
         <p>Displaying Results Near: {this.props.user.address}</p>
       <GoogleMapReact
@@ -38,6 +39,7 @@ class ResultsMap extends Component {
 
       </GoogleMapReact>
     </Container>
+  </div>
     );
   }
 }

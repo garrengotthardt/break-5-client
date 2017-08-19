@@ -52,8 +52,7 @@ class SignUpForm extends Component {
   render() {
     console.log(this.state.user);
     return (
-      <Container>
-        {/* {this.state.redirect? <Redirect to="/places/search"/> : null } */}
+      <Container text>
         <h1>Sign Up</h1>
         <Form id='signup-form' onSubmit={this.handleSubmit}>
           <Form.Field name="first_name" label='First name' control='input' placeholder='First name' onChange={this.handleChange}/>
