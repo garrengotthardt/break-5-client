@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react'
-import GoogleMapReact from 'google-map-react';
+import React, { Component } from 'react'
+import GoogleMapReact from 'google-map-react'
 import PlaceMapPoint from './PlaceMapPoint'
+import { Container, Label, Icon } from 'semantic-ui-react'
+import CurrentLocationLabel from './CurrentLocationLabel'
 
 
 class ResultsMap extends Component {
@@ -12,9 +13,11 @@ class ResultsMap extends Component {
   render() {
     console.log("results map props",this.props)
     return(
-      <div className='pageContent'>
+      <div >
+        <Container>
+          <CurrentLocationLabel currentLocation={this.props.user.address}/>
+        </Container>
       <Container style={{width: '100%', height: '90vh'}}>
-        <p>Displaying Results Near: {this.props.user.address}</p>
       <GoogleMapReact
         center={{lat: this.props.user.lat, lng: this.props.user.long}}
         defaultZoom={14}

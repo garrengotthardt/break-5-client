@@ -1,17 +1,16 @@
 import React, {Component} from 'react'
 import ResultListItem from './ResultListItem'
 import { Container, Item } from 'semantic-ui-react'
+import CurrentLocationLabel from './CurrentLocationLabel'
 
 const ResultsList = (props) => {
   return(
-    <div>
-      <Container className='pageContent'>
-      <p>Displaying Results Near: {props.user.address}</p>
+    <Container>
+      <CurrentLocationLabel currentLocation={props.user.address}/>
       <Item.Group divided>
         {props.allPlaces.map(place => (<ResultListItem place={place} handleCurrentPlaceSelect={props.handleCurrentPlaceSelect}/>))}
       </Item.Group>
     </Container>
-    </div>
   )
 }
 

@@ -10,8 +10,9 @@ body {
   padding: 0 !important;
 }
 
-.grid {
-
+.button {
+  border-radius: 0px !important;
+  border: 1px solid !important;
 }
 
 /* NAV */
@@ -50,17 +51,21 @@ body {
 
 /* PAGE CONTENT */
 
-.pageContent {
+.subNavContainer {
   display: block !important;
   padding-top: 20px;
+}
 
+.pageContent {
+  display: block !important;
+  padding-top: 40px;
 }
 
 /* LISTINGS SUBNAV */
 
 .subNav {
   display: block;
-  padding: 0;
+  /*padding: 20px 0 0 0 !important;*/
   margin-top: 20px;
   text-align: center;
   background-color: white;
@@ -73,8 +78,18 @@ body {
   color: black;
 }
 
-.subNavButton {
+.subNavButtons {
   margin: 0 auto;
   padding: 10px 0 0 0;
   color: black;
+}
+
+.subNavButtonL {
+  border-radius: 0px !important;
+  border-right: 0px !important;
+}
+
+.subNavButtonR {
+  border-radius: 0px !important;
+  border-lef: 0px !important;
 }

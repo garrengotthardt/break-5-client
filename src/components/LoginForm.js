@@ -26,21 +26,23 @@ class LoginForm extends Component {
 
   render () {
     return (
-      <Container text>
-        <h1>Login</h1>
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Field>
-          <label>Email</label>
-          <input name='email' placeholder='Email' onChange={this.handleChange} />
-        </Form.Field>
-        <Form.Field>
-          <label>Password</label>
-          <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
-        </Form.Field>
-        <Button type='submit'>Log In</Button>
-        Aren't signed up yet? <Link to='/signup'>Create an account here</Link>
-      </Form>
-    </Container>
+      <div className='pageContentLoggedOut'>
+        <Container text>
+          <h1>Login</h1>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Field>
+              <label>Email</label>
+              <input name='email' placeholder='Email' onChange={this.handleChange} />
+            </Form.Field>
+            <Form.Field>
+              <label>Password</label>
+              <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
+            </Form.Field>
+            <Button basic color='black' type='submit'>Log In</Button>
+            Aren't signed up yet? <Link to='/signup'>Create an account here</Link>
+          </Form>
+        </Container>
+      </div>
 
     )
   }

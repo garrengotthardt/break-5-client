@@ -14,7 +14,7 @@ class ResultsSubNav extends Component {
   render(){
 
     return(
-      <Container>
+      <Container className='subNavContainer'>
         <Grid className='subNav' columns='equal'>
           <Grid.Column>
             <NavLink to="/places/search">
@@ -23,9 +23,10 @@ class ResultsSubNav extends Component {
           </Grid.Column>
           <Grid.Column width={8}>
 
-            <Button.Group size='small' className='subNavButton'>
-              <NavLink to='/places/map'><Button basic color='black' size='small'>Map</Button></NavLink>
-              <NavLink to='/places/list'><Button basic color='black' size='small'>List</Button></NavLink>
+            <Button.Group size='small' className='subNavButtons'>
+              <NavLink to='/places/map'><Button basic color='black' className='subNavButtonL' size='small'>MAP</Button></NavLink>
+
+              <NavLink to='/places/list'><Button basic color='black' className='subNavButtonR' size='small'>LIST</Button></NavLink>
             </Button.Group>
 
           </Grid.Column>

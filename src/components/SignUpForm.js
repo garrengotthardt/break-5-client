@@ -52,6 +52,7 @@ class SignUpForm extends Component {
   render() {
     console.log(this.state.user);
     return (
+      <div className='pageContentLoggedOut'>
       <Container text>
         <h1>Sign Up</h1>
         <Form id='signup-form' onSubmit={this.handleSubmit}>
@@ -60,11 +61,12 @@ class SignUpForm extends Component {
           <Form.Field name="email" label='Email' control='input' placeholder='Email address'  onChange={this.handleChange}/>
           <Form.Input name="password" type="password" label='Enter Password' placeholder='Password' onChange={this.handleChange}/>
           <Form.Input name="password_confirmation" type="password" label='Confirm Password' placeholder='Password confirmation'  onChange={this.handleChange}/>
-          <Button type='submit'>Submit</Button>
+          <Button basic color='black' type='submit'>Submit</Button>
             Already have an account? <Link to='/login'>Log in here</Link>
           <Divider hidden />
         </Form>
       </Container>
+    </div>
     )
   }
 }
