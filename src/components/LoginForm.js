@@ -26,7 +26,7 @@ class LoginForm extends Component {
 
   render () {
     return (
-      <div className='pageContentLoggedOut'>
+      <div className='pageContent'>
         <Container text>
           <h1>Login</h1>
           <Form onSubmit={this.handleSubmit}>
@@ -39,7 +39,7 @@ class LoginForm extends Component {
               <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
             </Form.Field>
             <Button basic color='black' type='submit'>Log In</Button>
-            Aren't signed up yet? <Link to='/signup'>Create an account here</Link>
+            <span>    Aren't signed up yet? <Link to='/signup'>Create an account here</Link></span>
           </Form>
         </Container>
       </div>

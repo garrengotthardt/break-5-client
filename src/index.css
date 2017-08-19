@@ -82,14 +82,19 @@ body {
   margin: 0 auto;
   padding: 10px 0 0 0;
   color: black;
+
 }
 
 .subNavButtonL {
+  height: 30px !important;
   border-radius: 0px !important;
   border-right: 0px !important;
+  font-size: 12px !important;
 }
 
 .subNavButtonR {
+  height: 30px !important;
   border-radius: 0px !important;
-  border-lef: 0px !important;
+  border-left: 0px !important;
+  font-size: 12px !important;
 }

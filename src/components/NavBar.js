@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom'
-import { Grid, Image, Icon } from 'semantic-ui-react'
+import { Container, Grid, Image, Icon } from 'semantic-ui-react'
 
 
 class NavBar extends Component {
@@ -16,10 +16,11 @@ class NavBar extends Component {
 
     return(
       <div  className='mainNav'>
+        <Container>
         <Grid columns='equal' className='mainNavGrid'>
           <Grid.Column>
             <NavLink to="/places/map">
-            <Icon className="mainNavIcon" name='map outline' size='big'  />
+            <Icon className="mainNavIcon" name='map outline' size='large'  />
             </NavLink>
           </Grid.Column>
           <Grid.Column width={8}>
@@ -27,10 +28,11 @@ class NavBar extends Component {
           </Grid.Column>
           <Grid.Column>
             <NavLink  className='mainNavItem' to="/profile" >
-            <Icon className="mainNavIcon"  name='user outline' size='big'  />
+            <Icon className="mainNavIcon"  name='user outline' size='large'  />
           </NavLink>
           </Grid.Column>
         </Grid>
+      </Container>
     </div>
     )}
 }

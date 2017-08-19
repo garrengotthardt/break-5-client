@@ -46,8 +46,8 @@ class LocationSearch extends Component {
           {this.state.redirect? <Redirect to='/places/map'/> : null }
           <h3>Enter your current location</h3>
           <Form onSubmit={this.handleFormSubmit}>
-            <PlacesAutocomplete inputProps={inputProps} options={options} />
-            <Button type="submit">Submit</Button>
+            <PlacesAutocomplete inputProps={inputProps} options={options} /><br/>
+            <Button basic color='black' type="submit">Submit</Button>
           </Form>
         </Container>
 

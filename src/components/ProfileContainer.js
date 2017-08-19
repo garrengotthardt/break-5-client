@@ -6,9 +6,9 @@ import { Container, Button } from 'semantic-ui-react'
 class ProfileContainer extends Component {
     render(){
       return(
-        <div className='pageContent'>
+        <Container className='pageContent'>
           <Button onClick={() => this.props.onLogout()}>LogOut</Button>
-        </div>
+        </Container>
       )
   }
 }

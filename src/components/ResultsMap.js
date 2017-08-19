@@ -16,8 +16,8 @@ class ResultsMap extends Component {
       <div >
         <Container>
           <CurrentLocationLabel currentLocation={this.props.user.address}/>
-        </Container>
-      <Container style={{width: '100%', height: '90vh'}}>
+
+      <div style={{width: '100%', height: '80vh'}}>
       <GoogleMapReact
         center={{lat: this.props.user.lat, lng: this.props.user.long}}
         defaultZoom={14}
@@ -41,6 +41,7 @@ class ResultsMap extends Component {
         />))}
 
       </GoogleMapReact>
+    </div>
     </Container>
   </div>
     );

@@ -18,24 +18,22 @@ class ResultsSubNav extends Component {
         <Grid className='subNav' columns='equal'>
           <Grid.Column>
             <NavLink to="/places/search">
-              <Icon className='subNavIcon' name='search' size='large'  />
+              <Icon className='subNavIcon' name='search' />
             </NavLink>
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={6}>
 
             <Button.Group size='small' className='subNavButtons'>
-              <NavLink to='/places/map'><Button basic color='black' className='subNavButtonL' size='small'>MAP</Button></NavLink>
+              <NavLink to='/places/map'>
+              <Button basic color='black' className='subNavButtonL' size='large'>MAP</Button></NavLink>
 
-              <NavLink to='/places/list'><Button basic color='black' className='subNavButtonR' size='small'>LIST</Button></NavLink>
+              <NavLink to='/places/list'><Button basic color='black' className='subNavButtonR' size='tiny'>LIST</Button></NavLink>
             </Button.Group>
 
           </Grid.Column>
           <Grid.Column>
             <NavLink to="/places/new">
-              <Icon.Group className='subNavIcon' size='large'>
-                <Icon name='food' />
-                <Icon corner name='add' />
-              </Icon.Group>
+                <Icon className='subNavIcon' name='plus' />
             </NavLink>
           </Grid.Column>
         </Grid>

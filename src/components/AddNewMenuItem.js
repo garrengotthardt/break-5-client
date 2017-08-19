@@ -119,7 +119,8 @@ class AddNewMenuItem extends Component {
      <h3>Find the establishment for which you'd like to add a menu item:</h3>
      <Form onSubmit={this.handleEstablishmentSelect}>
        <PlacesAutocomplete inputProps={inputProps} options={options} />
-       <Button type="submit">Submit</Button>
+       <br/>
+       <Button basic color='black' type="submit">Next</Button>
      </Form>
    </div>
    )
@@ -131,10 +132,10 @@ class AddNewMenuItem extends Component {
           <Form.Input label='Item Size (optional)' placeholder='' name="variation" width={4} onChange={this.onMenuItemVariationChange} />
           <Form.Input label='Price' type='number' step="any" placeholder='price' name="price" width={3} onChange={this.onMenuItemVariationChange}/>
         </Form.Group>
-        <Button size='mini' disabled onClick={this.addAdditionalPrice}>Add Variation</Button>
+        <Button basic color='black' size='mini' disabled onClick={this.addAdditionalPrice}>Add Variation</Button>
         <br/>
         <br/>
-        <Button type="submit">Add Item</Button>
+        <Button basic color='black' type="submit">Add Item</Button>
       </Form>
 
       <h3>Current Menu Items:</h3>
