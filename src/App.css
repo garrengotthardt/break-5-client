@@ -116,23 +116,37 @@
 }
 
 .subNavButtons {
+  display: inline-block;
   margin: 0 auto;
   padding: 10px 0 0 0;
+  border-color: black;
+}
 
+.subNavButtonsActive {
+  border-color: black !important;
+  color: black !important;
 }
 
 .subNavButtonL {
-  height: 30px !important;
-  border-radius: 0px !important;
-  border-right: 0px !important;
-  font-size: 12px !important;
+  display: inline-block;
+  height: 30px;
+  width: 60px;
+  padding: 4px;
+  border: 2px solid #969696;
+  color: #969696;
+  border-right-width: 1px;
+  font-size: 12px;
 }
 
 .subNavButtonR {
-  height: 30px !important;
-  border-radius: 0px !important;
-  border-left: 0px !important;
-  font-size: 12px !important;
+  display: inline-block;
+  height: 30px;
+  width: 60px;
+  padding: 4px;
+  border: 2px solid #969696;
+  color: #969696;
+  border-left-width: 1px;
+  font-size: 12px;
 }
 
 

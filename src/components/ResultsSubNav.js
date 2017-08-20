@@ -20,12 +20,11 @@ class ResultsSubNav extends Component {
           </Grid.Column>
 
           <Grid.Column width={6}>
-            <Button.Group size='small' className='subNavButtons'>
-              <NavLink to='/places/map' className="subNavItem"  activeStyle={{ color: '#000'}}>
-              <Button basic className='subNavButtonL' size='large'>MAP</Button></NavLink>
+            <div size='small' className='subNavButtons'>
+              <NavLink to='/places/map' className="subNavItem subNavButtonL"  activeClassName='subNavButtonsActive'>MAP</NavLink>
 
-              <NavLink to='/places/list' className="subNavItem" activeStyle={{ color: '#000'}}><Button basic  className='subNavButtonR' size='tiny'>LIST</Button></NavLink>
-            </Button.Group>
+              <NavLink to='/places/list' className="subNavItem subNavButtonR" activeClassName='subNavButtonsActive'>LIST</NavLink>
+            </div>
           </Grid.Column>
 
           <Grid.Column textAlign='left'>
