@@ -1,19 +1,27 @@
 import React from 'react'
-import { Item, Icon } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Item, Icon, Grid } from 'semantic-ui-react'
 
 const ResultListItem = (props) => {
     return(
-      <Item onClick={() => props.handleCurrentPlaceSelect(props.place)}>
-        <Item.Content verticalAlign='middle'>
-          <Item.Header>
-            <Link to={`/places/${props.place.id}`}>
+
+      <Item className='resultsListItem'>
+          <div className='restaurantSaveList'>
+          <Icon name='heart empty' color='grey' ></Icon>
+          </div>
+          <Item.Content verticalAlign='middle' href={`/places/${props.place.id}`}>
+            <Item.Header>
             {props.place.name}
-           </Link>
-         </Item.Header>
-          <Item.Meta>{props.place.name}</Item.Meta>
-        </Item.Content>
+            </Item.Header>
+            <Item.Meta><em>{props.place.menu_items.length.toString()} items under $5</em></Item.Meta>
+            </Item.Content>
+            <Item.Content href={`/places/${props.place.id}`}>
+              <div className='resultsListItemArrow'>
+              <Icon name='angle right' size='big'></Icon>
+            </div>
+            </Item.Content>
+
      </Item>
+
     )
 }
 

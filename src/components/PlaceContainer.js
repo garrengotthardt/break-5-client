@@ -34,14 +34,8 @@ class PlaceContainer extends Component {
 
 
   render(){
-    console.log("place container state ", this.state)
-
-    // {this.state.menuItems.map(item => {
-    //   item.category === category ? <MenuItem item={item}/> : null
-    // })}
-
       return(
-      <Container>
+      <Container text>
 
         <h1>{this.state.name}</h1>
         <h5>{this.state.address}</h5>

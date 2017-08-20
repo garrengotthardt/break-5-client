@@ -5,10 +5,6 @@ import { Container, Grid, Icon, Button } from 'semantic-ui-react'
 class ResultsSubNav extends Component {
   constructor(props){
     super(props)
-
-    // state = {
-    //
-    // }
   }
 
   render(){

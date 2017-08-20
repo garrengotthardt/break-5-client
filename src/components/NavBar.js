@@ -15,8 +15,9 @@ class NavBar extends Component {
   render(){
 
     return(
-      <div  className='mainNav'>
-        <Container>
+      <div>
+      <div className='clearNav'></div>
+      <div className='mainNav'>
         <Grid columns='equal' className='mainNavGrid'>
           <Grid.Column>
             <NavLink to="/places/map">
@@ -32,8 +33,8 @@ class NavBar extends Component {
           </NavLink>
           </Grid.Column>
         </Grid>
-      </Container>
     </div>
+  </div>
     )}
 }
 
