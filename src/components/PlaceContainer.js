@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { List } from 'semantic-ui-react'
+import { Container, List } from 'semantic-ui-react'
 import ResultsSubNav from './ResultsSubNav'
 import ResultsList from './ResultsList'
-import MenuItem from './MenuItem'
+import MenuSection from './MenuSection'
 import { getPlace } from '../apiAdapter'
 
 class PlaceContainer extends Component {
@@ -14,17 +14,18 @@ class PlaceContainer extends Component {
       name: '',
       address: '',
       menuItems: [],
+      categories: [],
       google_places_id: ''
     }
 
   }
 
-  componentWillMount(){
-    let currentID = window.location.pathname.slice(8)
-    getPlace(currentID)
+  componentDidMount(){
+    getPlace(this.state.id)
     .then(placeData => this.setState({
       name: placeData.name,
       address: placeData.address,
+      categories: Array.from(new Set(placeData.menu_items.map( item => item.category))).reverse(),
       menuItems: placeData.menu_items,
       google_places_id: placeData.google_places_id
     }) )
@@ -33,19 +34,25 @@ class PlaceContainer extends Component {
 
 
   render(){
-    console.log("place container ", this.state)
+    console.log("place container state ", this.state)
+
+    // {this.state.menuItems.map(item => {
+    //   item.category === category ? <MenuItem item={item}/> : null
+    // })}
+
       return(
-      <div>
+      <Container>
+
         <h1>{this.state.name}</h1>
         <h5>{this.state.address}</h5>
 
         <h3>Menu Items Under $5:</h3>
 
         <List as='ol'>
-          { this.state.menuItems.map(item => (<MenuItem item={item}/>))}
+          {this.state.categories.map(category =>  <MenuSection category={category} menuItems={this.state.menuItems.filter(item =>  item.category === category)} />)}
         </List>
 
-      </div>
+      </Container>
     )
   }
 }

@@ -4,7 +4,7 @@ import { Label, Icon } from 'semantic-ui-react'
 
 const CurrentLocationLabel = (props) => {
     return(
-      <Label>
+      <Label size="large">
         <Icon name='marker' /> Displaying Results Near: {props.currentLocation}
       </Label>
     )

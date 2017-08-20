@@ -35,7 +35,7 @@ class ResultsMap extends Component {
         {this.props.allPlaces.map(place => (<PlaceMapPoint
           lat={place.lat}
           lng={place.long}
-          text={place.name}
+          place={place}
           linkTo={`/places/${place.id}`}
           icon='circle'
         />))}
