@@ -20,7 +20,7 @@ class NavBar extends Component {
       <div className='mainNav'>
         <Grid columns='equal' className='mainNavGrid'>
           <Grid.Column>
-            <NavLink to="/places/map">
+            <NavLink to="/places" className='mainNavItem' activeStyle={{ color: '#000'}}>
             <Icon className="mainNavIcon" name='map outline' size='large'  />
             </NavLink>
           </Grid.Column>
@@ -28,7 +28,7 @@ class NavBar extends Component {
             <Image id='mainNavLogo' src='/break5logo_black.svg' />
           </Grid.Column>
           <Grid.Column>
-            <NavLink  className='mainNavItem' to="/profile" >
+            <NavLink  className='mainNavItem' to="/profile" activeStyle={{ color: '#000'}}>
             <Icon className="mainNavIcon"  name='user outline' size='large'  />
           </NavLink>
           </Grid.Column>
