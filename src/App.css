@@ -33,13 +33,15 @@
 .button {
   border-radius: 0px !important;
   border: 1px solid !important;
+  margin: 10px 0 !important;
 }
 
 /* GENERAL STYLING */
 
 .blockCentered {
   display: block !important;
-  margin: 0 auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 a {
@@ -49,6 +51,12 @@ a {
 a:hover  {
   color: #000
 }
+
+.buttonAdjacentLink  {
+  display: inline-block;
+  margin: 0 0 0 15px;
+}
+
 
 
 
@@ -184,6 +192,7 @@ a:hover  {
 
 .resultsListHr {
   border: 1px solid #eeeeee !important;
+  margin: 3px;
 }
 
 .resultsListItemText {
@@ -191,6 +200,10 @@ a:hover  {
   vertical-align: middle;
   width: 74%;
   padding: 0px 0 0 0;
+}
+
+.resultsListItemText a {
+  color: #000
 }
 
 .restaurantSaveList {
@@ -210,6 +223,9 @@ a:hover  {
   color: grey;
 }
 
+.loadMore {
+  margin: 30px auto  !important;
+}
 
 
 

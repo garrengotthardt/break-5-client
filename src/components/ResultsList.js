@@ -31,7 +31,7 @@ class ResultsList extends Component {
 
   displayButton = () => {
     if (this.state.remainingPlaces.length > 0) {
-      return <Button basic color='black' className="blockCentered" onClick={() => this.loadMore()}>Load More</Button>
+      return <Button basic color='black' className="blockCentered loadMore" onClick={() => this.loadMore()}>Load More</Button>
     }
   }
 
@@ -44,6 +44,7 @@ class ResultsList extends Component {
           <Loader active />
           :
           <div className='resultsListContainer'>
+            <hr className='resultsListHr'/>
             {this.state.displayedPlaces.map(place => (<ResultListItem place={place}/>))}
           </div>
         }

@@ -39,7 +39,7 @@ class LoginForm extends Component {
               <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
             </Form.Field>
             <Button basic color='black' type='submit'>Log In</Button>
-            <span>    Aren't signed up yet? <Link to='/signup'>Create an account here</Link></span>
+            <div className='buttonAdjacentLink'>Aren't signed up yet? <Link to='/signup'>Create an account here</Link></div>
           </Form>
         </Container>
       </div>
