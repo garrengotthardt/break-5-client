@@ -4,32 +4,30 @@ import { Link } from 'react-router-dom'
 
 const ResultListItem = (props) => {
     return(
-
-      <Item className='resultsListItem'>
+      <div>
+      <div className='resultsListItem'>
           <div className='restaurantSaveList'>
-          <Icon name='heart empty' color='grey' ></Icon>
+            <Icon name='heart empty' color='grey' ></Icon>
           </div>
 
-          <Item.Content verticalAlign='middle'>
+          <div className='resultsListItemText'>
             <Link to={`/places/${props.place.id}`}>
-            <Item.Header>
-            {props.place.name}
-            </Item.Header>
-            <Item.Meta><em>{props.place.menu_items.length.toString()} items under $5</em></Item.Meta>
+              <h3>
+              {props.place.name}
+            </h3>
+            <p><em>{props.place.menu_items.length.toString()} items under $5</em></p>
             </Link>
-            </Item.Content>
+          </div>
 
 
-            <Item.Content >
+            <div className='resultsListItemArrow'>
               <Link to={`/places/${props.place.id}`}>
-                <div className='resultsListItemArrow'>
-                  <Icon name='angle right' size='big'></Icon>
-                </div>
+                  <Icon name='angle right' size='big' color='grey'></Icon>
               </Link>
-            </Item.Content>
-
-
-          </Item>
+            </div>
+      </div>
+      <hr className='resultsListHr'/>
+    </div>
 
     )
 }

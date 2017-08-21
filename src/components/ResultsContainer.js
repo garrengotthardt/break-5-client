@@ -22,7 +22,7 @@ class ResultsContainer extends Component {
           <Switch>
             <Route path="/places/map" render={() => <ResultsMap user={this.props.user} allPlaces={this.props.allPlaces}  />}/>
 
-            <Route path="/places/list" render={() => <ResultsList user={this.props.user} allPlaces={this.props.allPlaces} />}/>
+            <Route path="/places/list" render={() => <ResultsList user={this.props.user} allPlaces={this.props.allPlaces} isLoading={this.props.isLoading}/>}/>
 
             <Route path="/places/search" render={() => <LocationSearch currentLocation={this.props.user.address} setCurrentLocation={this.props.setCurrentLocation} />}/>
 

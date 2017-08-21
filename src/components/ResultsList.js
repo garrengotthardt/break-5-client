@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ResultListItem from './ResultListItem'
-import { Container, Item } from 'semantic-ui-react'
+import { Container, Item, Button, Loader } from 'semantic-ui-react'
 import CurrentLocationLabel from './CurrentLocationLabel'
 
 class ResultsList extends Component {
@@ -8,31 +8,46 @@ class ResultsList extends Component {
     super(props)
 
     this.state = {
-      allPlaces: []
+      displayedPlaces: this.props.allPlaces.slice(0,10),
+      remainingPlaces: this.props.allPlaces.slice(11,-1)
     }
   }
 
-  componentDidMount(){
-    this.setState({
-      allPlaces: this.props.allPlaces
-    })
+
+
+
+  loadMore = () => {
+    if (this.state.remainingPlaces.length >= 10){
+      this.setState({
+        displayedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces.splice(0,10))
+      })
+    } else if (this.state.remainingPlaces.length < 10 && this.state.remainingPlaces.length < 10) {
+      this.setState({
+        displayedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces),
+        remainingPlaces: []
+      })
+    }
+  }
+
+  displayButton = () => {
+    if (this.state.remainingPlaces.length > 0) {
+      return <Button basic color='black' className="blockCentered" onClick={() => this.loadMore()}>Load More</Button>
+    }
   }
 
 
   render(){
-    console.log("rendering places")
     return(
       <Container text>
-        {/* <CurrentLocationLabel currentLocation={this.props.user.address} style={{margin:'0 auto'}}/> */}
-        { this.state.allPlaces.length === 0 ?
-          <h2>Loading</h2>
+        <CurrentLocationLabel currentLocation={this.props.user.address}/>
+        { this.state.displayedPlaces.length === 0 ?
+          <Loader active />
           :
-        <Item.Group divided>
-          {this.state.allPlaces.map(place => (<ResultListItem place={place}/>))}
-        </Item.Group>
-
+          <div className='resultsListContainer'>
+            {this.state.displayedPlaces.map(place => (<ResultListItem place={place}/>))}
+          </div>
         }
-
+        { this.displayButton()}
       </Container>
     )
   }

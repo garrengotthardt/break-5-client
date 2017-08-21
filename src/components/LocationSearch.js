@@ -42,7 +42,7 @@ class LocationSearch extends Component {
    }
    console.log('location search state',this.state)
     return(
-        <Container>
+        <Container text>
           {this.state.redirect? <Redirect to='/places/map'/> : null }
           <h3>Enter your current location:</h3>
           <Form onSubmit={this.handleFormSubmit}>

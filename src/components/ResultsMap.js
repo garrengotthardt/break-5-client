@@ -17,7 +17,7 @@ class ResultsMap extends Component {
         <Container>
           <CurrentLocationLabel currentLocation={this.props.user.address}/>
 
-      <div style={{width: '100%', height: '80vh'}}>
+      <div style={{width: '100%', height: '75vh', filter: 'grayscale(70%)'}}>
       <GoogleMapReact
         center={{lat: this.props.user.lat, lng: this.props.user.long}}
         defaultZoom={14}

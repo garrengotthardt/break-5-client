@@ -144,7 +144,7 @@ class AddNewMenuItem extends Component {
    )
 
     return(
-      <Container>
+      <Container text>
         { this.state.showMenuItemForm ? menuItemForm : establishmentSelect }
       </Container>
     )

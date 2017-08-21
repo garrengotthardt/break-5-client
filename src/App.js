@@ -30,14 +30,13 @@ class App extends Component {
       },
       allPlaces: [],
       sortedPlaces: [],
+      isLoading: true
       // currentPlace: {},
       // currentUserSaves: []
     }
   }
 
   componentWillMount(){
-    // SETTING CURRENT USER
-    console.log("setting id")
     this.getCurrentUser()
   }
 
@@ -54,7 +53,12 @@ class App extends Component {
 
   componentDidMount(){
     getPlaces()
-     .then(allPlaces => this.setState({ allPlaces }) )
+     .then(allPlaces => {
+       this.setState({
+         allPlaces: allPlaces,
+         isLoading: false
+      })
+    })
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -183,7 +187,7 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, currentPlace: this.state.currentPlace} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, currentPlace: this.state.currentPlace, isLoading: this.state.isLoading} )}/>
 
           <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
         </div>
