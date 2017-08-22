@@ -5,14 +5,14 @@ import { BrowserRouter as Router, Route, Redirect, Link, Switch} from 'react-rou
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import geolib from 'geolib'
 import AuthAdapter from './authAdapter'
-import { getPlaces } from './apiAdapter'
+import { getPlaces, getPlace } from './apiAdapter'
 import Auth from './authorize'
 import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
 import ResultsContainer from './components/ResultsContainer'
 import ProfileContainer from './components/ProfileContainer'
-
+const BASE_URL = process.env.REACT_APP_API
 
 class App extends Component {
 
@@ -65,8 +65,7 @@ class App extends Component {
       getPlaces()
        .then(allPlaces => {
          this.setState({
-           allPlaces: allPlaces,
-           isLoading: false
+           allPlaces: allPlaces
         })
       })
   }
@@ -91,22 +90,44 @@ class App extends Component {
     let prevAddress = prevState.auth.user.address
     let currentAddress = this.state.auth.user.address
 
-    if ((prevLat !== currentLat && this.state.allPlaces.length > 0) || prevState.allPlaces.length !== this.state.allPlaces.length){
+    if ((prevLat !== currentLat && this.state.allPlaces.length > 0) || prevState.allPlaces.length !== this.state.allPlaces.length && this.state.auth.user.lat !== null){
       console.log("setting new distances")
       let setNewDistances = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
-      console.log("set new distances", this.state.allPlaces)
       let sortedPlaces = this.sortByDistance(setNewDistances)
-
       this.setState({
         allPlaces: sortedPlaces
       })
     }
 
-    if (prevLat !== null && prevLat !== currentLat || prevAddress !== '' && prevAddress !== currentAddress){
+    if (prevLat !== null && prevLat !== currentLat){
+      AuthAdapter.updateCurrentUser(this.state.auth)
+      .then(res => {
+        debugger
+        if (res.newPlaceIDs.length > 0){
+          getPlaces()
+           .then(allPlaces => {
+             this.setState({
+               allPlaces: allPlaces
+            })
+          })
+        } else {
+          alert("No new places found")
+        }
+      })
+      // .then(newPlaces => {
+      //   debugger
+      //  if (newPlaces.length > 0){
+      //    this.setState({
+      //      allPlaces: this.state.allPlaces.push(newPlaces)
+      //    })
+      //  } else {
+      //    alert("No new places found")
+      //  }
+      // })
+    } else if (prevAddress !== '' && prevAddress !== currentAddress){
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => console.log("response from updating user's address/lat/long", res))
     }
-
   }
 
   getCurrentUser = () => {
