@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Redirect, Link, Switch} from 'react-router-dom'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import geolib from 'geolib'
 import AuthAdapter from './authAdapter'
 import { getPlaces } from './apiAdapter'
 import Auth from './authorize'
@@ -53,21 +54,40 @@ class App extends Component {
 
   componentDidMount(){
     getPlaces()
-     .then(allPlaces => {
-       this.setState({
-         allPlaces: allPlaces,
-         isLoading: false
-      })
-    })
+    //  .then(allPlaces => {
+    //    this.setState({
+    //      allPlaces: allPlaces,
+    //      isLoading: false
+    //   })
+    // })
+    .then(allPlaces => allPlaces.map(place => this.addDistanceToPlace(place)))
+    .then(placesWithDistance => placesWithDistance.sort(function(a,b){
+      return a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0;
+    }))
+    .then(sortedPlaces =>  this.setState({
+      allPlaces: sortedPlaces,
+    }))
   }
 
+  addDistanceToPlace = (place) => {
+    let distance = geolib.getDistance({latitude: this.state.auth.user.lat, longitude: this.state.auth.user.long}, {latitude: place.lat, longitude: place.long} )
+      place.distance = distance
+      return place
+  }
+
+
+
   componentDidUpdate(prevProps, prevState){
+    // if (prevState.allPlaces.length !== this.state.allPlaces.length){
+    //
+    // }
+
     let prevLat = prevState.auth.user.lat
     let currentLat = this.state.auth.user.lat
     let prevAddress = prevState.auth.user.address
     let currentAddress = this.state.auth.user.address
 
-    if (prevLat != null && prevLat !== currentLat || prevAddress != '' && prevAddress !== currentAddress){
+    if (prevLat !== null && prevLat !== currentLat || prevAddress !== '' && prevAddress !== currentAddress){
       console.log("GOT HERE")
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => console.log("response from updating user's address/lat/long", res))

@@ -15,7 +15,13 @@ const ResultListItem = (props) => {
               <h3>
               {props.place.name}
             </h3>
-            <p><em>{props.place.menu_items.length.toString()} items under $5</em></p>
+            <p className='resultsListItemMeta'><em>{props.place.menu_items.length.toString()} items under $5</em></p>
+            </Link>
+          </div>
+
+          <div className='resultsListItemDistance'>
+            <Link to={`/places/${props.place.id}`}>
+            <p className='resultsListItemMeta'><em>{(Math.round(props.place.distance/1609.344 * 10)/10).toString()} miles</em></p>
             </Link>
           </div>
 

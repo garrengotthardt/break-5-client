@@ -195,10 +195,18 @@ a:hover  {
   margin: 3px;
 }
 
+.restaurantSaveList {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  padding: 0px 0 0 10px;
+  width: 11%;
+}
+
 .resultsListItemText {
   display: inline-block;
   vertical-align: middle;
-  width: 74%;
+  width: 64%;
   padding: 0px 0 0 0;
 }
 
@@ -206,21 +214,25 @@ a:hover  {
   color: #000
 }
 
-.restaurantSaveList {
+.resultsListItemMeta {
+  color: #cccccc
+}
+
+.resultsListItemDistance {
   display: inline-block;
   vertical-align: middle;
+  text-align: right;
   position: relative;
   padding: 0px 0 0 0;
-  width: 11%;
+  width: 17%;
 }
 
 .resultsListItemArrow {
-  width: 15%;
-  vertical-align: middle;
-  text-align: right;
   display: inline-block;
+  vertical-align: middle;
+  width: 8%;
+  text-align: right !important;
   padding: 0px 0 0 0;
-  color: grey;
 }
 
 .loadMore {
