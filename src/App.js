@@ -91,9 +91,12 @@ class App extends Component {
     let prevAddress = prevState.auth.user.address
     let currentAddress = this.state.auth.user.address
 
-    if (prevLat !== currentLat){
-      let placesWithNewDistance = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
-      let sortedPlaces = this.sortByDistance(this.state.allPlaces)
+    if ((prevLat !== currentLat && this.state.allPlaces.length > 0) || prevState.allPlaces.length !== this.state.allPlaces.length){
+      console.log("setting new distances")
+      let setNewDistances = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
+      console.log("set new distances", this.state.allPlaces)
+      let sortedPlaces = this.sortByDistance(setNewDistances)
+
       this.setState({
         allPlaces: sortedPlaces
       })
