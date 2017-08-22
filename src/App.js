@@ -12,7 +12,6 @@ import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
 import ResultsContainer from './components/ResultsContainer'
 import ProfileContainer from './components/ProfileContainer'
-const BASE_URL = process.env.REACT_APP_API
 
 class App extends Component {
 
@@ -31,8 +30,7 @@ class App extends Component {
       },
       allPlaces: [],
       sortedPlaces: [],
-      isLoading: true
-      // currentPlace: {},
+      isSearching: false,
       // currentUserSaves: []
     }
   }
@@ -100,30 +98,26 @@ class App extends Component {
     }
 
     if (prevLat !== null && prevLat !== currentLat){
+      this.setState({
+        isSearching: true
+      })
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => {
-        debugger
-        if (res.newPlaceIDs.length > 0){
+        if (res.newPlacesCount > 0){
           getPlaces()
            .then(allPlaces => {
              this.setState({
-               allPlaces: allPlaces
+               allPlaces: allPlaces,
+               isSearching: false
             })
           })
         } else {
-          alert("No new places found")
+          this.setState({
+            isSearching: false
+         })
         }
       })
-      // .then(newPlaces => {
-      //   debugger
-      //  if (newPlaces.length > 0){
-      //    this.setState({
-      //      allPlaces: this.state.allPlaces.push(newPlaces)
-      //    })
-      //  } else {
-      //    alert("No new places found")
-      //  }
-      // })
+
     } else if (prevAddress !== '' && prevAddress !== currentAddress){
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => console.log("response from updating user's address/lat/long", res))
@@ -242,7 +236,7 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, currentPlace: this.state.currentPlace, isLoading: this.state.isLoading} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
 
           <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
         </div>

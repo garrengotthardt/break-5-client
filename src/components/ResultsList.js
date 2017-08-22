@@ -39,7 +39,7 @@ class ResultsList extends Component {
   render(){
     return(
       <Container text>
-        <CurrentLocationLabel currentLocation={this.props.user.address}/>
+        <CurrentLocationLabel currentLocation={this.props.user.address} isSearching={this.props.isSearching}/>
         { this.state.displayedPlaces.length === 0 ?
           <Loader active />
           :
