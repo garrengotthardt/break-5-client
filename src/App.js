@@ -61,9 +61,7 @@ class App extends Component {
     //   })
     // })
     .then(allPlaces => allPlaces.map(place => this.addDistanceToPlace(place)))
-    .then(placesWithDistance => placesWithDistance.sort(function(a,b){
-      return a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0;
-    }))
+    .then(placesWithDistance => this.sortByDistance(placesWithDistance))
     .then(sortedPlaces =>  this.setState({
       allPlaces: sortedPlaces,
     }))
@@ -73,6 +71,12 @@ class App extends Component {
     let distance = geolib.getDistance({latitude: this.state.auth.user.lat, longitude: this.state.auth.user.long}, {latitude: place.lat, longitude: place.long} )
       place.distance = distance
       return place
+  }
+
+  sortByDistance = (placesArray) => {
+    return placesArray.sort(function(a,b){
+      return a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0;
+    })
   }
 
 
@@ -87,8 +91,19 @@ class App extends Component {
     let prevAddress = prevState.auth.user.address
     let currentAddress = this.state.auth.user.address
 
-    if (prevLat !== null && prevLat !== currentLat || prevAddress !== '' && prevAddress !== currentAddress){
+    if (prevLat !== null && prevLat !== currentLat){
+      let placesWithNewDistance = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
+      let sortedPlaces = this.sortByDistance(this.state.allPlaces)
+      console.log(this.state.auth.user.address)
+      console.log("sortedPlaces",sortedPlaces)
+      this.setState({
+        allPlaces: sortedPlaces
+      })
       console.log("GOT HERE")
+
+    }
+
+    if (prevLat !== null && prevLat !== currentLat || prevAddress !== '' && prevAddress !== currentAddress){
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => console.log("response from updating user's address/lat/long", res))
     }
