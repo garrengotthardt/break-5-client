@@ -53,18 +53,22 @@ class App extends Component {
 
 
   componentDidMount(){
-    getPlaces()
-    //  .then(allPlaces => {
-    //    this.setState({
-    //      allPlaces: allPlaces,
-    //      isLoading: false
-    //   })
-    // })
-    .then(allPlaces => allPlaces.map(place => this.addDistanceToPlace(place)))
-    .then(placesWithDistance => this.sortByDistance(placesWithDistance))
-    .then(sortedPlaces =>  this.setState({
-      allPlaces: sortedPlaces,
-    }))
+    console.log("componentDidMount")
+    this.state.auth.isLoggedIn ?
+      getPlaces()
+      .then(allPlaces => allPlaces.map(place => this.addDistanceToPlace(place)))
+      .then(placesWithDistance => this.sortByDistance(placesWithDistance))
+      .then(sortedPlaces =>  this.setState({
+        allPlaces: sortedPlaces,
+      }))
+    :
+      getPlaces()
+       .then(allPlaces => {
+         this.setState({
+           allPlaces: allPlaces,
+           isLoading: false
+        })
+      })
   }
 
   addDistanceToPlace = (place) => {
@@ -82,25 +86,17 @@ class App extends Component {
 
 
   componentDidUpdate(prevProps, prevState){
-    // if (prevState.allPlaces.length !== this.state.allPlaces.length){
-    //
-    // }
-
     let prevLat = prevState.auth.user.lat
     let currentLat = this.state.auth.user.lat
     let prevAddress = prevState.auth.user.address
     let currentAddress = this.state.auth.user.address
 
-    if (prevLat !== null && prevLat !== currentLat){
+    if (prevLat !== currentLat){
       let placesWithNewDistance = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
       let sortedPlaces = this.sortByDistance(this.state.allPlaces)
-      console.log(this.state.auth.user.address)
-      console.log("sortedPlaces",sortedPlaces)
       this.setState({
         allPlaces: sortedPlaces
       })
-      console.log("GOT HERE")
-
     }
 
     if (prevLat !== null && prevLat !== currentLat || prevAddress !== '' && prevAddress !== currentAddress){
