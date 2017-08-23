@@ -30,6 +30,7 @@ class App extends Component {
       },
       allPlaces: [],
       isSearching: false,
+      // showBackButton: false
       // currentUserSaves: []
     }
   }
@@ -61,6 +62,8 @@ class App extends Component {
         })
       })
   }
+
+
 
   componentDidUpdate(prevProps, prevState){
     let prevLat = prevState.auth.user.lat
@@ -221,11 +224,12 @@ class App extends Component {
     return (
       <Router>
         <div className='appContainer'>
-          <Route path="/" component={NavBar}/>
+          {/* <Route path="/" render={(props) => <NavBar showBackButton={this.state.showBackButton} {...props} />}/> */}
+          <Route path="/" component={NavBar} />
 
           <Route exact path="/" render={()=> <Redirect to="/profile"/>}/>
 
-          <Route exact path="/places" render={()=> <Redirect to="/places/map"/>}/>
+          <Route exact path="/places" render={()=> <Redirect to="/places/map"/> }/>
 
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/profile"/> : <LoginForm onLogin={this.handleLogin}/> } />
 

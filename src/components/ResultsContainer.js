@@ -17,7 +17,7 @@ class ResultsContainer extends Component {
   render(){
     return(
       <div>
-        <ResultsSubNav handleResultsDisplayChange={this.handleResultsDisplayChange}/>
+        <ResultsSubNav/>
         <div className="pageContent">
           <Switch>
             <Route path="/places/map" render={() => <ResultsMapContainer user={this.props.user} allPlaces={this.props.allPlaces} isSearching={this.props.isSearching} />}/>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink } from  'react-router-dom'
+import { Link, NavLink } from  'react-router-dom'
 import { Container, Grid, Icon, Button } from 'semantic-ui-react'
 
 const ResultsSubNav = () => {
-
-    return(
-      <Container className='subNavContainer'>
+  return(
+    <Container className='subNavContainer'>
+      { !parseInt(window.location.pathname.slice(8)) ?
         <Grid className='subNav' columns='equal'>
           <Grid.Column textAlign='right'>
             <NavLink to="/places/search" className="subNavItem"  activeStyle={{ color: '#000'}}>
@@ -24,8 +24,11 @@ const ResultsSubNav = () => {
             </NavLink>
           </Grid.Column>
         </Grid>
-      </Container>
-    )
+        :
+        null
+      }
+    </Container>
+  )
 }
 
 export default ResultsSubNav
