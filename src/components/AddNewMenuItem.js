@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import { Container, Button, Input, Form } from 'semantic-ui-react'
+import { Container, Button, Input } from 'semantic-ui-react'
 import { postNewItem } from '../apiAdapter'
+
 
 class AddNewMenuItem extends Component {
   constructor(props) {
@@ -18,15 +19,19 @@ class AddNewMenuItem extends Component {
         google_places_id: '',
         newMenuItem: {
           name: '',
-          // category: ''
+          category: 'misc. food'
         },
         newMenuItemVariations: {
           variation: '',
           price: null
         }
-      }
+      },
+      shouldRedirect: false,
+      newlyCreatedEstID: null,
     }
   }
+
+
 
   // AUTCOMPLETE FORM FUNCTIONS
   onAddressChange = (address) => this.setState({ address })
@@ -97,12 +102,21 @@ class AddNewMenuItem extends Component {
   handleAddItem = (event) => {
     event.preventDefault()
     postNewItem(this.state.selectedEstablishment)
+    .then(res => {
+      this.setState({
+        newlyCreatedEstID: res.placeID,
+        shouldRedirect: true
+      })
+
+      this.props.getPlacesAndDistances()
+    })
     // .then(() => this.props.handlePost()) PASS UP TO APP TO REFETCH ALL RESTAURANTS/MENU ITEMS FOR STATE
   }
 
 
 
   render(){
+    console.log(this.state)
 
     const inputProps = {
      value: this.state.address,
@@ -115,36 +129,46 @@ class AddNewMenuItem extends Component {
       types: ['establishment']
     }
 
+    const myStyles = {
+      googleLogoContainer: {
+      display: 'none'
+      },
+    }
    const establishmentSelect = (<div>
      <h3>Find the establishment for which you'd like to add a menu item:</h3>
-     <Form onSubmit={this.handleEstablishmentSelect}>
-       <PlacesAutocomplete inputProps={inputProps} options={options} />
-       <br/>
+     <form onSubmit={this.handleEstablishmentSelect}>
+       <PlacesAutocomplete  inputProps={inputProps} options={options} styles={myStyles} />
        <Button basic color='black' type="submit">Next</Button>
-     </Form>
+     </form>
    </div>
    )
 
+
+
    const menuItemForm = (<div><h3>Add menu items for {this.state.address}:</h3>
-       <Form onSubmit={this.handleAddItem}>
-        <Form.Group>
-          <Form.Input label='Item Name' placeholder='Enter Item Name' name="name" width={7} onChange={this.onMenuItemChange} />
-          <Form.Input label='Item Size (optional)' placeholder='' name="variation" width={4} onChange={this.onMenuItemVariationChange} />
-          <Form.Input label='Price' type='number' step="any" placeholder='price' name="price" width={3} onChange={this.onMenuItemVariationChange}/>
-        </Form.Group>
-        <Button basic color='black' size='mini' disabled onClick={this.addAdditionalPrice}>Add Variation</Button>
-        <br/>
-        <br/>
-        <Button basic color='black' type="submit">Add Item</Button>
-      </Form>
+       <form onSubmit={this.handleAddItem}>
+         <div className='formInlineGroup'>
+          <input className='formGroup2ChildL60' label='Item Name' placeholder='Enter Item Name' name="name" width={7} onChange={this.onMenuItemChange} />
 
-      <h3>Current Menu Items:</h3>
+          <select className='formGroup2ChildR40' name="category" placeholder="choose a category" onChange={this.onMenuItemChange} defaultValue='misc. food'>
+             <option value='misc. food'>Misc. Food</option>
+             <option value='misc. beverages'>Misc. Beverages</option>
+          </select>
+        </div>
+        <div className='formInlineGroup'>
+          <input className='formGroup2ChildL60' label='Item Size (optional)' placeholder='Item Size (optional)' name="variation" width={4} onChange={this.onMenuItemVariationChange} />
+          <input className='formGroup2ChildR40'label='Price' type='number' min='0' max='5' step='any' placeholder='price' name='price' width={3} onChange={this.onMenuItemVariationChange}/>
+        </div>
 
+        {/* <Button basic color='black' size='mini' disabled onClick={this.addAdditionalPrice}>Add Variation</Button> */}
+        <Button basic color='black' type='submit'>Add Item</Button>
+      </form>
   </div>
    )
 
     return(
       <Container text>
+        {this.state.shouldRedirect ? <Redirect to={`/places/${this.state.newlyCreatedEstID}`}/> : null }
         { this.state.showMenuItemForm ? menuItemForm : establishmentSelect }
       </Container>
     )

@@ -35,6 +35,12 @@ class LocationSearch extends Component {
      onChange: this.onChange,
    }
 
+   const myStyles = {
+     googleLogoContainer: {
+     display: 'none'
+     },
+   }
+
    const options = {
      // location: new google.maps.LatLng(-34, 151),
      // radius: 2000,
@@ -45,10 +51,10 @@ class LocationSearch extends Component {
         <Container text>
           {this.state.redirect? <Redirect to='/places/map'/> : null }
           <h3>Enter your current location:</h3>
-          <Form onSubmit={this.handleFormSubmit}>
-            <PlacesAutocomplete inputProps={inputProps} options={options} /><br/>
+          <form onSubmit={this.handleFormSubmit}>
+            <PlacesAutocomplete inputProps={inputProps} options={options}  />
             <Button basic color='black' type="submit">Set Location</Button>
-          </Form>
+          </form>
         </Container>
 
     )

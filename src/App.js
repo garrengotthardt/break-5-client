@@ -29,7 +29,6 @@ class App extends Component {
         isLoggedIn: false
       },
       allPlaces: [],
-      sortedPlaces: [],
       isSearching: false,
       // currentUserSaves: []
     }
@@ -53,12 +52,7 @@ class App extends Component {
   componentDidMount(){
     console.log("componentDidMount")
     this.state.auth.isLoggedIn ?
-      getPlaces()
-      .then(allPlaces => allPlaces.map(place => this.addDistanceToPlace(place)))
-      .then(placesWithDistance => this.sortByDistance(placesWithDistance))
-      .then(sortedPlaces =>  this.setState({
-        allPlaces: sortedPlaces,
-      }))
+      this.getPlacesAndDistances()
     :
       getPlaces()
        .then(allPlaces => {
@@ -67,20 +61,6 @@ class App extends Component {
         })
       })
   }
-
-  addDistanceToPlace = (place) => {
-    let distance = geolib.getDistance({latitude: this.state.auth.user.lat, longitude: this.state.auth.user.long}, {latitude: place.lat, longitude: place.long} )
-      place.distance = distance
-      return place
-  }
-
-  sortByDistance = (placesArray) => {
-    return placesArray.sort(function(a,b){
-      return a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0;
-    })
-  }
-
-
 
   componentDidUpdate(prevProps, prevState){
     let prevLat = prevState.auth.user.lat
@@ -140,6 +120,15 @@ class App extends Component {
         })
       )
     }
+  }
+
+  getPlacesAndDistances = () => {
+    getPlaces()
+    .then(allPlaces => allPlaces.map(place => this.addDistanceToPlace(place)))
+    .then(placesWithDistance => this.sortByDistance(placesWithDistance))
+    .then(sortedPlaces =>  this.setState({
+      allPlaces: sortedPlaces,
+    }))
   }
 
 
@@ -214,11 +203,17 @@ class App extends Component {
     }))
   }
 
+  addDistanceToPlace = (place) => {
+    let distance = geolib.getDistance({latitude: this.state.auth.user.lat, longitude: this.state.auth.user.long}, {latitude: place.lat, longitude: place.long} )
+      place.distance = distance
+      return place
+  }
 
-  //CURRENT PLACE HANDLER
-  // handleCurrentPlaceSelect = (currentPlace) => {
-  //     this.setState({ currentPlace })
-  // }
+  sortByDistance = (placesArray) => {
+    return placesArray.sort(function(a,b){
+      return a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0;
+    })
+  }
 
 
   render() {
@@ -236,7 +231,7 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
 
           <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
         </div>

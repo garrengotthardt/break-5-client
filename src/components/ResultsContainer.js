@@ -26,7 +26,7 @@ class ResultsContainer extends Component {
 
             <Route path="/places/search" render={() => <LocationSearch currentLocation={this.props.user.address} setCurrentLocation={this.props.setCurrentLocation} />}/>
 
-            <Route path="/places/new" component={AddNewMenuItem}/>
+            <Route path="/places/new" render={() => <AddNewMenuItem getPlacesAndDistances={this.props.getPlacesAndDistances}/>}/>
 
             <Route path="/places/:id" component={PlaceContainer}/>
           </Switch>
