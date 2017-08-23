@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import ResultsSubNav from './ResultsSubNav'
 import ResultsList from './ResultsList'
-import ResultsMap from './ResultsMap'
+import ResultsMapContainer from './ResultsMapContainer'
 import LocationSearch from './LocationSearch'
 import AddNewMenuItem from './AddNewMenuItem'
 import PlaceContainer from './PlaceContainer'
+import NotFound from './NotFound'
 import { Route, NavLink, Redirect, Switch } from 'react-router-dom';
 
 
@@ -14,13 +15,12 @@ class ResultsContainer extends Component {
   }
 
   render(){
-     console.log("results container")
     return(
       <div>
         <ResultsSubNav handleResultsDisplayChange={this.handleResultsDisplayChange}/>
         <div className="pageContent">
           <Switch>
-            <Route path="/places/map" render={() => <ResultsMap user={this.props.user} allPlaces={this.props.allPlaces} isSearching={this.props.isSearching} />}/>
+            <Route path="/places/map" render={() => <ResultsMapContainer user={this.props.user} allPlaces={this.props.allPlaces} isSearching={this.props.isSearching} />}/>
 
             <Route path="/places/list" render={() => <ResultsList user={this.props.user} allPlaces={this.props.allPlaces} isSearching={this.props.isSearching}/>}/>
 

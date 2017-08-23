@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Container, List } from 'semantic-ui-react'
-import ResultsSubNav from './ResultsSubNav'
-import ResultsList from './ResultsList'
-import MenuSection from './MenuSection'
+import { Container, Loader } from 'semantic-ui-react'
 import { getPlace } from '../apiAdapter'
+import Menu from './Menu'
+
 
 class PlaceContainer extends Component {
   constructor(props){
@@ -15,7 +14,8 @@ class PlaceContainer extends Component {
       address: '',
       menuItems: [],
       categories: [],
-      google_places_id: ''
+      google_places_id: '',
+      menuIsLoading: true
     }
 
   }
@@ -27,25 +27,25 @@ class PlaceContainer extends Component {
       address: placeData.address,
       categories: Array.from(new Set(placeData.menu_items.map( item => item.category))).reverse(),
       menuItems: placeData.menu_items,
-      google_places_id: placeData.google_places_id
+      google_places_id: placeData.google_places_id,
+      menuIsLoading: false
     }) )
   }
 
 
+  componentWillUnmount(){
+    console.log("unmounting")
+  }
 
   render(){
+    console.log("place container state", this.state )
       return(
       <Container text>
-
-        <h1>{this.state.name}</h1>
-        <h5>{this.state.address}</h5>
-
-        <h3>Menu Items Under $5:</h3>
-
-        <List as='ol'>
-          {this.state.categories.map(category =>  <MenuSection category={category} menuItems={this.state.menuItems.filter(item =>  item.category === category)} />)}
-        </List>
-
+        {this.state.menuIsLoading ?
+          <Loader active/>
+          :
+          <Menu name={this.state.name} address={this.state.address} categories={this.state.categories} menuItems={this.state.menuItems}/>
+        }
       </Container>
     )
   }
