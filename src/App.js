@@ -227,11 +227,11 @@ class App extends Component {
           {/* <Route path="/" render={(props) => <NavBar showBackButton={this.state.showBackButton} {...props} />}/> */}
           <Route path="/" component={NavBar} />
 
-          <Route exact path="/" render={()=> <Redirect to="/profile"/>}/>
+          <Route exact path="/" render={()=> <Redirect to="/places/map"/>}/>
 
           <Route exact path="/places" render={()=> <Redirect to="/places/map"/> }/>
 
-          <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/profile"/> : <LoginForm onLogin={this.handleLogin}/> } />
+          <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places"/> : <LoginForm onLogin={this.handleLogin}/> } />
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
