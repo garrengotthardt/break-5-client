@@ -7,7 +7,7 @@ const MenuSection = (props) => {
     return(
       <div className='menuSection'>
         <div className='categoryHeader'>{props.category.toUpperCase()}</div>
-        <div>
+        <div className='menuItems'>
           {props.menuItems.map(item => (<MenuItem item={item}/>))}
         </div>
     </div>

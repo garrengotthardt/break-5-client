@@ -44,7 +44,11 @@ class PlaceContainer extends Component {
         {this.state.menuIsLoading ?
           <Loader active/>
           :
-          <Menu name={this.state.name} address={this.state.address} categories={this.state.categories} menuItems={this.state.menuItems}/>
+          <div className='placeContainer'>
+          <h1>{this.state.name}</h1>
+          <h5>{this.state.address}</h5>
+          <Menu categories={this.state.categories} menuItems={this.state.menuItems}/>
+          </div>
         }
       </Container>
     )

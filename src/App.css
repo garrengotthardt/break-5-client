@@ -314,47 +314,76 @@ button:focus {
   margin: 30px auto  !important;
 }
 
+/* PLACE CONTAINER */
+
+.placeContainer {
+  display: block;
+  width: 100%;
+}
 
 
 /* MENU */
 
+.menu {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  padding: 30px 0 25px 0;
+}
+
 .menuSection {
   display: block;
-  padding: 0px 0 25px 0;
+  padding: 0px 0 10px 0;
 }
 
 .categoryHeader {
   display: block;
   padding: 20px 0 15px 0;
-  font-size: 20px;
+  font-size: 18px;
+  max-width: 300px;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+
 }
 
 .menuItem {
   display: block;
   width: 100%;
   max-width: 550px;
-  margin: 0 20px 10px 20px;
+  margin: 0 20px 30px 20px;
 }
 
 .menuItemName {
   display: inline-block;
+  width: 40%;
+}
+
+
+.menuItemVars {
+  display: inline-block;
   width: 50%;
+  float: right;
+  padding: 10px 0 0 0;
 }
 
 .menuItemVar {
-  display: inline-block;
-  width: 40%;
+  display: block;
+  width: 100%;
   float: right;
-
 }
 
 .menuItemVarName {
   display: inline-block;
-  width: 40%;
+  width: 60%;
   font-style: italic;
+  text-align: left;
 }
 
 .menuItemVarPrice {
   display: inline-block;
-  width: 45%;
+  width: 30%;
+  text-align: right;
 }
