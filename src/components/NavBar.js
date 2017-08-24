@@ -41,7 +41,9 @@ class NavBar extends Component {
               }
             </Grid.Column>
             <Grid.Column width={8}>
+              <NavLink to="/places" >
               <Image id='mainNavLogo' src='/break5logo_black_v2.svg' />
+              </NavLink>
             </Grid.Column>
             <Grid.Column>
               <NavLink  className='mainNavItem' to="/profile" activeStyle={{ color: '#000'}}>

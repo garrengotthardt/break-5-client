@@ -32,7 +32,7 @@ class PlaceMapPoint extends Component {
     return(
       <Link to={this.props.linkTo} >
         { this.state.displayDetails ?
-          <div style={{position:'absolute', display: 'block', bottom: '-4px', left: '20px', backgroundColor:'#969696', opacity: '.95', height: '60px', width: '220px', zIndex: '10000', padding: '10px 15px', borderRadius: '10px 10px 10px 0'}}>
+          <div style={{position:'absolute', display: 'block', bottom: '-4px', left: '20px', backgroundColor:'#000', opacity: '.75', height: '60px', width: '240px', zIndex: '10000', padding: '10px 15px', borderRadius: '10px 10px 10px 0'}}>
             <div style={{color:'#fff', fontSize: '16px'}}>{this.props.name}</div>
             <div style={{color:'#ccc', fontSize: '16px', fontStyle: 'italic', padding: '5px 0'}}>{this.props.numberOfItems} items under $5</div>
           </div>
