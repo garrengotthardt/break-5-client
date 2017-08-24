@@ -316,8 +316,45 @@ button:focus {
 
 
 
-/* MENU COMPONENT */
+/* MENU */
+
+.menuSection {
+  display: block;
+  padding: 0px 0 25px 0;
+}
 
 .categoryHeader {
-  margin: 20px 0 15px 0;
+  display: block;
+  padding: 20px 0 15px 0;
+  font-size: 20px;
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 20px 10px 20px;
+}
+
+.menuItemName {
+  display: inline-block;
+  width: 50%;
+}
+
+.menuItemVar {
+  display: inline-block;
+  width: 40%;
+  float: right;
+
+}
+
+.menuItemVarName {
+  display: inline-block;
+  width: 40%;
+  font-style: italic;
+}
+
+.menuItemVarPrice {
+  display: inline-block;
+  width: 45%;
 }
