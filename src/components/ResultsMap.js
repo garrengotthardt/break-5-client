@@ -19,6 +19,8 @@ const ResultsMap = (props) => {
         {props.allPlaces.map(place => (<PlaceMapPoint
           lat={place.lat}
           lng={place.long}
+          name={place.name}
+          numberOfItems={place.menu_items.length.toString()}
           place={place}
           linkTo={`/places/${place.id}`}
           icon='circle'
