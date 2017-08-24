@@ -242,7 +242,11 @@ button:focus {
   border-left-width: 1px;
   font-size: 12px;
 }
-
+/* RESTAURANT MAP */
+.gm-fullscreen-control {
+  display: none !important;
+  z-index: -1000;
+}
 
 /* RESTAURANT LIST */
 

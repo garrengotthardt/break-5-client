@@ -7,7 +7,10 @@ const MenuItem = (props) => {
       <List.Item as='li' value=''>
         <h4>{props.item.name}</h4>
         <List.Item as='ul'>
-          {props.item.item_variations.reverse().map(variation => (<List.Item as='li' value='-'>{variation.variation} — ${variation.price.toString()}</List.Item>))}
+          {props.item.item_variations.reverse().map(itemVar => (
+            <List.Item as='li' value='-'>
+              {itemVar.variation} — ${itemVar.price.toString()}
+            </List.Item>))}
         </List.Item>
     </List.Item>
     )
