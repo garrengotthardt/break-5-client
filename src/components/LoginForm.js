@@ -32,11 +32,11 @@ class LoginForm extends Component {
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <label>Email</label>
-              <input name='email' placeholder='Email' onChange={this.handleChange} />
+              <input name='email' placeholder='Email' value={this.state.email} onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Password</label>
-              <input type='password' name='password' placeholder='Password' onChange={this.handleChange} />
+              <input type='password' name='password' placeholder='Password' value={this.state.password} onChange={this.handleChange} />
             </Form.Field>
             <Button basic color='black' type='submit'>Log In</Button>
             <div className='buttonAdjacentLink'>Aren't signed up yet? <Link to='/signup'>Create an account here</Link></div>
