@@ -20,9 +20,9 @@ class ResultsContainer extends Component {
         <ResultsSubNav/>
         <div className="pageContent">
           <Switch>
-            <Route path="/places/map" render={() => <ResultsMapContainer user={this.props.user} allPlaces={this.props.allPlaces} isSearching={this.props.isSearching} />}/>
+            <Route path="/places/map" render={() => <ResultsMapContainer user={this.props.user} allPlaces={this.props.allPlaces} savedPlaces={this.props.savedPlaces} isSearching={this.props.isSearching} />}/>
 
-            <Route path="/places/list" render={() => <ResultsList user={this.props.user} allPlaces={this.props.allPlaces} isSearching={this.props.isSearching}/>}/>
+            <Route path="/places/list" render={() => <ResultsList user={this.props.user} allPlaces={this.props.allPlaces} savedPlaces={this.props.savedPlaces} isSearching={this.props.isSearching}/>}/>
 
             <Route path="/places/search" render={() => <LocationSearch currentLocation={this.props.user.address} setCurrentLocation={this.props.setCurrentLocation} />}/>
 

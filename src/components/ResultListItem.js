@@ -3,11 +3,18 @@ import { Item, Icon, Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 const ResultListItem = (props) => {
+  console.log(props)
     return(
       <div>
       <div className='resultsListItem'>
           <div className='restaurantSaveList'>
-            <Icon name='heart empty' color='grey' ></Icon>
+            {
+              props.savedPlaces.map(place => place.id).includes(props.place.id) ?
+              <Icon name='heart' color='grey' ></Icon>
+              :
+              <Icon name='heart empty' color='grey' ></Icon>
+            }
+
           </div>
 
           <div className='resultsListItemText'>

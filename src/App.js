@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Redirect, Link, Switch} from 'react-rou
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import geolib from 'geolib'
 import AuthAdapter from './authAdapter'
-import { getPlaces, getPlace } from './apiAdapter'
+import { getPlaces, getPlace, saveUserPlace, unsaveUserPlace } from './apiAdapter'
 import Auth from './authorize'
 import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
@@ -24,14 +24,13 @@ class App extends Component {
           id: null,
           lat: null,
           long: null,
-          address: ''
+          address: '',
+          savedPlaces: []
         },
         isLoggedIn: false
       },
       allPlaces: [],
-      isSearching: false,
-      // showBackButton: false
-      // currentUserSaves: []
+      isSearching: false
     }
   }
 
@@ -116,10 +115,12 @@ class App extends Component {
             address: res.address,
             id: res.id,
             lat: res.lat,
-            long: res.long
+            long: res.long,
+            savedPlaces: res.saved_places
             },
           isLoggedIn: true
           },
+
         })
       )
     }
@@ -219,6 +220,28 @@ class App extends Component {
   }
 
 
+  /* SAVE & UNSAVE PLACES */
+
+  getUserFavorites = () => {
+
+  }
+
+  favoritePlace = (userID, placeID) => {
+    saveUserPlace()
+    .then(res => console.log(res))
+    .then(() => this.fetchSavedPlaces())
+  }
+
+  unfavoritePlace = (userID, placeID) => {
+    saveUserPlace()
+    .then(res => console.log(res))
+    .then(() => this.fetchSavedPlaces())
+  }
+
+
+
+
+
   render() {
     console.log("app state",this.state)
     return (
@@ -235,7 +258,7 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
 
           <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
         </div>

@@ -45,7 +45,7 @@ class ResultsList extends Component {
           :
           <div className='resultsListContainer'>
             <hr className='resultsListHr'/>
-            {this.state.displayedPlaces.map(place => (<ResultListItem place={place}/>))}
+            {this.state.displayedPlaces.map(place => (<ResultListItem place={place} savedPlaces={this.props.savedPlaces}/>))}
           </div>
         }
         { this.displayButton()}

@@ -30,3 +30,18 @@ export const postNewItem = (selectedEstablishment) => {
     headers: headers()
   }).then(res => res.json()))
 }
+
+export const saveUserPlace = (placeID, userID) => {
+  return(fetch(`${BASE_URL}/user_places`, {
+    method: 'POST',
+    body: JSON.stringify(placeID, userID),
+    headers: headers()
+  }).then(res => res.json()))
+}
+
+export const unsaveUserPlace = (userPlaceID) => {
+  return(fetch(`${BASE_URL}/user_places/${userPlaceID}`, {
+    method: 'DELETE',
+    headers: headers()
+  }).then(res => res.json()))
+}
