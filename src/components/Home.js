@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Button } from 'semantic-ui-react'
+import { Container, Button, Form } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 const Home = (props) => {
@@ -14,9 +14,8 @@ const Home = (props) => {
 
         <Link to='/signup'><Button className='homeButton' basic color='black' type='submit'>Sign Up</Button></Link>
       </div>
-      <Button className='demoButton' basic color='gray' type='submit'>Demo</Button>
 
-
+      <Button className='demoButton' basic color='gray' type='submit' onClick={() => props.onLogin({email: "demo@demo.com", password: "123456"})}>Demo</Button>
     </Container>
   )
 }

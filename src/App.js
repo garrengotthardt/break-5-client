@@ -241,7 +241,7 @@ class App extends Component {
         <div className='appContainer'>
           <Route path="/" component={NavBar} />
 
-          <Route exact path="/" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places"/> : <Home/> }/>
+          <Route exact path="/" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places"/> : <Home onLogin={this.handleLogin}/> }/>
 
           <Route exact path="/places" render={()=> <Redirect to="/places/map"/> }/>
 

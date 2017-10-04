@@ -61,8 +61,8 @@ class SignUpForm extends Component {
           <Form.Field name="email" label='Email' control='input' placeholder='Email address'  onChange={this.handleChange}/>
           <Form.Input name="password" type="password" label='Enter Password' placeholder='Password' onChange={this.handleChange}/>
           <Form.Input name="password_confirmation" type="password" label='Confirm Password' placeholder='Password confirmation'  onChange={this.handleChange}/>
-          <Button basic color='black' type='submit'>Submit</Button>
-            <span>    Already have an account? <Link to='/login'>Log in here</Link></span>
+          <Button basic color='black' type='submit'>Sign Up</Button>
+            Already have an account? <Link to='/login'>Log in here</Link>
           <Divider hidden />
         </Form>
       </Container>

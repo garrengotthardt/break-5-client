@@ -25,6 +25,7 @@ class LoginForm extends Component {
   }
 
   render () {
+    console.log(this.state)
     return (
       <div className='pageContent'>
         <Container text>
@@ -38,8 +39,8 @@ class LoginForm extends Component {
               <label>Password</label>
               <input type='password' name='password' placeholder='Password' value={this.state.password} onChange={this.handleChange} />
             </Form.Field>
-            <Button basic color='black' type='submit'>Log In</Button>
-            <div className='buttonAdjacentLink'>Aren't signed up yet? <Link to='/signup'>Create an account here</Link></div>
+            <Button basic color='black' type='submit'>LOG IN</Button>
+            <div >Aren't signed up yet? <Link to='/signup'>Create an account here</Link></div>
           </Form>
         </Container>
       </div>
