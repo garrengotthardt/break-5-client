@@ -9,10 +9,10 @@ const ResultListItem = (props) => {
       <div className='resultsListItem'>
           <div className='restaurantSaveList'>
             {
-              props.savedPlaces.map(place => place.id).includes(props.place.id) ?
-              <Icon name='heart' color='grey' ></Icon>
+              props.savedPlaces.map(savedPlace => savedPlace.place_id).includes(props.place.id) ?
+              <Icon name='heart' color='grey' onClick={() => props.unfavoritePlace(props.savedPlaces.filter(savedPlace => savedPlace.place_id === props.place.id)[0].id)} ></Icon>
               :
-              <Icon name='heart empty' color='grey' ></Icon>
+              <Icon name='heart empty' color='grey' onClick={() => props.favoritePlace(props.userID, props.place.id)}></Icon>
             }
 
           </div>

@@ -222,20 +222,17 @@ class App extends Component {
 
   /* SAVE & UNSAVE PLACES */
 
-  getUserFavorites = () => {
-
-  }
-
   favoritePlace = (userID, placeID) => {
-    saveUserPlace()
+    saveUserPlace(userID, placeID)
     .then(res => console.log(res))
-    .then(() => this.fetchSavedPlaces())
+    .then(() => this.getCurrentUser())
   }
 
-  unfavoritePlace = (userID, placeID) => {
-    saveUserPlace()
+  unfavoritePlace = (userPlaceID) => {
+    console.log(userPlaceID)
+    unsaveUserPlace(userPlaceID)
     .then(res => console.log(res))
-    .then(() => this.fetchSavedPlaces())
+    .then(() => this.getCurrentUser())
   }
 
 
@@ -258,7 +255,7 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
 
           <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
         </div>

@@ -31,10 +31,10 @@ export const postNewItem = (selectedEstablishment) => {
   }).then(res => res.json()))
 }
 
-export const saveUserPlace = (placeID, userID) => {
+export const saveUserPlace = (userID, placeID) => {
   return(fetch(`${BASE_URL}/user_places`, {
     method: 'POST',
-    body: JSON.stringify(placeID, userID),
+    body: JSON.stringify({"user_id": `${userID}`, "place_id": `${placeID}`}),
     headers: headers()
   }).then(res => res.json()))
 }
