@@ -46,7 +46,7 @@ class LocationSearch extends Component {
      // radius: 2000,
      types: ['address']
    }
-   console.log('location search state',this.state)
+   
     return(
         <Container text>
           {this.state.redirect? <Redirect to='/places/map'/> : null }

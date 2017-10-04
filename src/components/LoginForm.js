@@ -25,7 +25,6 @@ class LoginForm extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <div className='pageContent'>
         <Container text>

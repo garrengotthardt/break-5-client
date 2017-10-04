@@ -235,7 +235,6 @@ class App extends Component {
 
 
   render() {
-    console.log("app state",this.state)
     return (
       <Router>
         <div className='appContainer'>
