@@ -5,8 +5,6 @@ import ResultsMap from './ResultsMap'
 
 
 const ResultsMapContainer = (props) => {
-
-    console.log("results map props",props)
     return(
         <Container>
         { props.allPlaces.length == 0 ?
