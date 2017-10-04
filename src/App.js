@@ -7,6 +7,7 @@ import geolib from 'geolib'
 import AuthAdapter from './authAdapter'
 import { getPlaces, getPlace, saveUserPlace, unsaveUserPlace } from './apiAdapter'
 import Auth from './authorize'
+import Home from './components/Home'
 import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
@@ -224,19 +225,13 @@ class App extends Component {
 
   favoritePlace = (userID, placeID) => {
     saveUserPlace(userID, placeID)
-    .then(res => console.log(res))
     .then(() => this.getCurrentUser())
   }
 
   unfavoritePlace = (userPlaceID) => {
-    console.log(userPlaceID)
     unsaveUserPlace(userPlaceID)
-    .then(res => console.log(res))
     .then(() => this.getCurrentUser())
   }
-
-
-
 
 
   render() {
@@ -244,10 +239,9 @@ class App extends Component {
     return (
       <Router>
         <div className='appContainer'>
-          {/* <Route path="/" render={(props) => <NavBar showBackButton={this.state.showBackButton} {...props} />}/> */}
           <Route path="/" component={NavBar} />
 
-          <Route exact path="/" render={()=> <Redirect to="/places/map"/>}/>
+          <Route exact path="/" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/map"/> : <Home/> }/>
 
           <Route exact path="/places" render={()=> <Redirect to="/places/map"/> }/>
 

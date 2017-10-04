@@ -8,12 +8,12 @@ export default function (Component, inheritedProps) {
     }
     componentDidMount () {
       if(!localStorage.getItem('jwt')){
-        this.context.router.history.push('/login')
+        this.context.router.history.push('/')
       }
     }
     componentWillUpdate () {
       if(!localStorage.getItem('jwt')){
-        this.context.router.history.push('/login')
+        this.context.router.history.push('/')
       }
     }
     render(){
