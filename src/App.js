@@ -7,8 +7,8 @@ import geolib from 'geolib'
 import AuthAdapter from './authAdapter'
 import { getPlaces, getPlace, saveUserPlace, unsaveUserPlace } from './apiAdapter'
 import Auth from './authorize'
-import Home from './components/Home'
 import NavBar from './components/NavBar'
+import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
 import ResultsContainer from './components/ResultsContainer'
@@ -241,7 +241,7 @@ class App extends Component {
         <div className='appContainer'>
           <Route path="/" component={NavBar} />
 
-          <Route exact path="/" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/map"/> : <Home/> }/>
+          <Route exact path="/" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places"/> : <Home/> }/>
 
           <Route exact path="/places" render={()=> <Redirect to="/places/map"/> }/>
 

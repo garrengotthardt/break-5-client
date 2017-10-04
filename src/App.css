@@ -187,6 +187,52 @@ button:focus {
   margin: 40px 0;
 }
 
+/* HOME */
+
+#homeMap {
+  display: block;
+  margin: 40px auto 20px auto;
+  width: 80%;
+  min-width: 400px;
+  max-width: 1000px;
+}
+
+#homeHeader {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#homeBody {
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  width: 70%;
+  font-size: 20px;
+}
+
+#loginSignupButtons {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
+  font-size: 20px;
+}
+.homeButton {
+  display: inline-block !important;
+  margin: 10px 5px !important;
+  padding: 5px !important;
+  text-align: center;
+  width: 200px;
+  height: 40px;
+}
+
+.demoButton {
+  display: block !important;
+  margin: 10px auto !important;
+  width: 200px;
+  height: 40px;
+}
 /* LISTINGS SUBNAV */
 
 .subNav {
