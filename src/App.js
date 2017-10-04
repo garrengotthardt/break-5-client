@@ -51,7 +51,6 @@ class App extends Component {
 
 
   componentDidMount(){
-    console.log("componentDidMount")
     this.state.auth.isLoggedIn ?
       this.getPlacesAndDistances()
     :
@@ -72,7 +71,6 @@ class App extends Component {
     let currentAddress = this.state.auth.user.address
 
     if ((prevLat !== currentLat && this.state.allPlaces.length > 0) || prevState.allPlaces.length !== this.state.allPlaces.length && this.state.auth.user.lat !== null){
-      console.log("setting new distances")
       let setNewDistances = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
       let sortedPlaces = this.sortByDistance(setNewDistances)
       this.setState({
@@ -152,7 +150,6 @@ class App extends Component {
   handleSignup = (signupParams) => {
     AuthAdapter.signup(signupParams)
     .then(res => {
-      console.log("signup json response", res)
       localStorage.setItem('jwt', res.jwt)
       this.setState({
         auth:{
@@ -184,7 +181,6 @@ class App extends Component {
   setCurrentLocation = (address) => {
     geocodeByAddress(address)
     .then(results => {
-      console.log("geocode by address results", results)
       this.setState({
         auth:{
           ...this.state.auth,
