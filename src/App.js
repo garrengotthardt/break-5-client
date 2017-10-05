@@ -34,6 +34,10 @@ class App extends Component {
         isLoggedIn: false
       },
       allPlaces: [],
+      displayedPlaces: [],
+      remainingPlaces: [],
+      displayedSavedPlaces: [],
+      remainingSavedPlaces: [],
       isSearching: false
     }
   }
@@ -60,7 +64,9 @@ class App extends Component {
       getPlaces()
        .then(allPlaces => {
          this.setState({
-           allPlaces: allPlaces
+           allPlaces: allPlaces,
+           displayedPlaces: allPlaces.slice(0,10),
+           remainingPlaces: allPlaces.slice(11,-1)
         })
       })
   }
@@ -125,6 +131,9 @@ class App extends Component {
             },
           isLoggedIn: true
           },
+
+          displayedSavedPlaces: this.filterSavedPlaces(res.saved_places.slice(0,10)),
+          remainingSavedPlaces: this.filterSavedPlaces(res.saved_places.slice(11,-1))
 
         })
       )
@@ -225,6 +234,10 @@ class App extends Component {
 
   /* SAVE & UNSAVE PLACES */
 
+  filterSavedPlaces = (savedPlacesForDisplay) => {
+    this.state.allPlaces.filter(place => savedPlacesForDisplay.map(savedPlace => savedPlace.id).includes(place.id))
+  }
+
   favoritePlace = (userID, placeID) => {
     saveUserPlace(userID, placeID)
     .then(() => this.getCurrentUser())
@@ -234,6 +247,34 @@ class App extends Component {
     unsaveUserPlace(userPlaceID)
     .then(() => this.getCurrentUser())
   }
+
+
+/* Load More on List */
+  loadMorePlaces = () => {
+      if (this.state.remainingPlaces.length >= 10){
+        this.setState({
+          displayedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces.splice(0,10))
+        })
+      } else if (this.state.remainingPlaces.length < 10 && this.state.remainingPlaces.length < 10) {
+        this.setState({
+          displayedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces),
+          remainingPlaces: []
+        })
+      }
+    }
+
+    loadMoreSavedPlaces = () => {
+        if (this.state.remainingSavedPlaces.length >= 10){
+          this.setState({
+            displayedSavedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces.splice(0,10))
+          })
+        } else if (this.state.remainingPlaces.length < 10 && this.state.remainingPlaces.length < 10) {
+          this.setState({
+            displayedSavedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces),
+            remainingSavedPlaces: []
+          })
+        }
+      }
 
 
   render() {
@@ -251,9 +292,9 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, displayedPlaces: this.state.displayedPlaces, remainingPlaces: this.state.remainingPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching, loadMore: this.loadMore} )}/>
 
-          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout, user:this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace})} />
+          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout, user:this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, displayedPlaces: this.state.displayedSavedPlaces, remainingPlaces: this.state.remainingSavedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace})} />
         </div>
       </Router>
     );
