@@ -138,7 +138,7 @@ button:focus {
   margin: 0;
   text-align: center;
   background-color: white;
-  height: 70px;
+  height: 60px;
   border-bottom: 2px solid black;
 }
 
@@ -152,35 +152,32 @@ button:focus {
 }
 
 #mainNavLogo {
-  height: 50px;
-  margin: 0 auto;
-  padding: 10px 0 0 0;
+  height: 37px;
+  margin: 6px auto;
+  padding: 0 0 0 0;
 }
 
 .mainNavItem {
+  display: inline-block;
   text-align: center;
   color: #969696;
+  margin: 12px auto;
 }
 
 
 .mainNavIcon {
-  margin: 0 auto;
-  padding: 15px 0 0 0;
+  margin: 15px auto;
 }
 
 /* PAGE CONTENT */
 .clearNav {
-  height: 70px;
+  height: 60px;
 }
 
-.subNavContainer {
-  display: block !important;
-  margin-top: 30px;
-}
 
 .pageContent {
   display: block !important;
-  margin: 40px 0;
+  margin: 30px 0 40px 0;
 }
 
 /* HOME */
@@ -231,14 +228,17 @@ button:focus {
   height: 40px;
 }
 /* LISTINGS SUBNAV */
+.subNavContainer {
+  display: block !important;
+  margin-top: 25px;
+}
 
 .subNav {
   display: block;
-  /*padding: 20px 0 0 0 !important;*/
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
   background-color: white;
-  height: 50px;
+  height: 40px;
 }
 
 .subNavItem {
