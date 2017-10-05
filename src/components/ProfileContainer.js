@@ -11,7 +11,7 @@ class ProfileContainer extends Component {
   render(){
     return(
       <Container text className='pageContent'>
-        <h1>Welcome, {this.props.user.firstName} {this.props.user.lastName}!</h1>
+        <h1>Welcome, {this.props.user.firstName}!</h1>
         <Button basic color='black' onClick={() => this.props.onLogout()}>LogOut</Button>
 
         <h2>— Your Favorites —</h2>
