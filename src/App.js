@@ -23,6 +23,9 @@ class App extends Component {
       auth: {
         user: {
           id: null,
+          firstName: null,
+          lastName: null,
+          email: null,
           lat: null,
           long: null,
           address: '',
@@ -111,8 +114,11 @@ class App extends Component {
       .then(res => this.setState({
           auth: {
             user: {
-            address: res.address,
             id: res.id,
+            firstName: res.first_name,
+            lastName: res.last_name,
+            email: res.email,
+            address: res.address,
             lat: res.lat,
             long: res.long,
             savedPlaces: res.saved_places
@@ -231,6 +237,7 @@ class App extends Component {
 
 
   render() {
+    console.log(this.state)
     return (
       <Router>
         <div className='appContainer'>
@@ -246,7 +253,7 @@ class App extends Component {
 
           <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching} )}/>
 
-          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout})} />
+          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout, user:this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace})} />
         </div>
       </Router>
     );

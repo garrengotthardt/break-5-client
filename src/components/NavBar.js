@@ -32,7 +32,7 @@ class NavBar extends Component {
             <Grid.Column>
               { this.state.showBackButton ?
                 <div onClick={() => this.props.history.goBack()} className="mainNavItem" >
-                  <Icon className='subNavIcon' name='angle left' size='big' color='black' size='big' />
+                  <Icon className='mainNavIcon' name='angle left' size='big' color='black' size='big' />
                 </div>
                 :
                 <NavLink to="/places" className='mainNavItem' activeStyle={{ color: '#000'}}>
