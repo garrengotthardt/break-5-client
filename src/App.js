@@ -29,7 +29,8 @@ class App extends Component {
           lat: null,
           long: null,
           address: '',
-          savedPlaces: []
+          savedPlaceIDs: [],
+          savedPlaceList: []
         },
         isLoggedIn: false
       },
@@ -66,7 +67,13 @@ class App extends Component {
          this.setState({
            allPlaces: allPlaces,
            displayedPlaces: allPlaces.slice(0,10),
-           remainingPlaces: allPlaces.slice(11,-1)
+           remainingPlaces: allPlaces.slice(11,-1),
+           auth:{
+             user: {
+             ...this.state.auth.user,
+             savedPlaceList: allPlaces.filter(place => this.state.auth.user.savedPlaceIDs.map(savedPlace => savedPlace.place_id).includes(place.id))
+             }
+           }
         })
       })
   }
@@ -120,6 +127,7 @@ class App extends Component {
       .then(res => this.setState({
           auth: {
             user: {
+            ... this.state.auth.user,
             id: res.id,
             firstName: res.first_name,
             lastName: res.last_name,
@@ -127,7 +135,7 @@ class App extends Component {
             address: res.address,
             lat: res.lat,
             long: res.long,
-            savedPlaces: res.saved_places
+            savedPlaceIDs: res.saved_places
             },
           isLoggedIn: true
           },
@@ -235,7 +243,7 @@ class App extends Component {
   /* SAVE & UNSAVE PLACES */
 
   filterSavedPlaces = (savedPlacesForDisplay) => {
-    this.state.allPlaces.filter(place => savedPlacesForDisplay.map(savedPlace => savedPlace.id).includes(place.id))
+    this.state.allPlaces.filter(place => (savedPlacesForDisplay.map(savedPlace => savedPlace.place_id).includes(place.id)))
   }
 
   favoritePlace = (userID, placeID) => {
@@ -292,9 +300,9 @@ class App extends Component {
 
           <Route path="/signup" render={()=> this.state.auth.isLoggedIn ? <Redirect to="/places/search"/> :  <SignUpForm onSignup={this.handleSignup}/>} />
 
-          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, displayedPlaces: this.state.displayedPlaces, remainingPlaces: this.state.remainingPlaces, savedPlaces: this.state.auth.user.savedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching, loadMore: this.loadMore} )}/>
+          <Route path="/places" component={Auth(ResultsContainer, {user: this.state.auth.user, allPlaces: this.state.allPlaces, displayedPlaces: this.state.displayedPlaces, remainingPlaces: this.state.remainingPlaces, savedPlaces: this.state.auth.user.savedPlaceIDs, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace, setCurrentLocation:this.setCurrentLocation, getPlacesAndDistances: this.getPlacesAndDistances, currentPlace: this.state.currentPlace, isSearching: this.state.isSearching, loadMore: this.loadMorePlaces} )}/>
 
-          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout, user:this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaces, displayedPlaces: this.state.displayedSavedPlaces, remainingPlaces: this.state.remainingSavedPlaces, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace})} />
+          <Route path="/profile" component={Auth( ProfileContainer , {onLogout: this.handleLogout, user:this.state.auth.user, allPlaces: this.state.allPlaces, savedPlaces: this.state.auth.user.savedPlaceIDs, displayedPlaces: this.state.auth.user.savedPlaceList, handleCurrentPlaceSelect: this.handleCurrentPlaceSelect, favoritePlace: this.favoritePlace, unfavoritePlace: this.unfavoritePlace})} />
         </div>
       </Router>
     );

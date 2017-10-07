@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ResultListItem from './ResultListItem'
+import List from './List'
 import { Container, Item, Button, Loader } from 'semantic-ui-react'
 import CurrentLocationLabel from './CurrentLocationLabel'
 
@@ -28,10 +28,7 @@ class ResultsList extends Component {
         { this.props.displayedPlaces.length === 0 ?
           <Loader active />
           :
-          <div className='resultsListContainer'>
-            <hr className='resultsListHr'/>
-            {this.props.displayedPlaces.map(place => (<ResultListItem userID={this.props.user.id} place={place} savedPlaces={this.props.savedPlaces} favoritePlace={this.props.favoritePlace} unfavoritePlace={this.props.unfavoritePlace}/>))}
-          </div>
+          <List displayedPlaces={this.props.displayedPlaces} user={this.props.user} savedPlaces={this.props.savedPlaces} favoritePlace={this.props.favoritePlace} unfavoritePlace={this.props.unfavoritePlace}/>
         }
         { this.displayButton()}
       </Container>
