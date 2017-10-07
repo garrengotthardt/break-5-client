@@ -7,13 +7,10 @@ class ProfileContainer extends Component {
   constructor(props){
     super(props)
 
-
   }
 
 
   render(){
-    console.log("profile props", this.props)
-    console.log("profile props", this.state)
     return(
       <Container text className='pageContent'>
         <h1>Welcome, {this.props.user.firstName}!</h1>

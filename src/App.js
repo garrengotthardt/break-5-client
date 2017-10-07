@@ -66,8 +66,8 @@ class App extends Component {
        .then(allPlaces => {
          this.setState({
            allPlaces: allPlaces,
-           displayedPlaces: allPlaces.slice(0,10),
-           remainingPlaces: allPlaces.slice(11,-1),
+          //  displayedPlaces: allPlaces.slice(0,10),
+          //  remainingPlaces: allPlaces.slice(11,-1),
            auth:{
              user: {
              ...this.state.auth.user,
@@ -85,12 +85,15 @@ class App extends Component {
     let currentLat = this.state.auth.user.lat
     let prevAddress = prevState.auth.user.address
     let currentAddress = this.state.auth.user.address
+    let prevSavedPlaceIDs = prevState.auth.user.savedPlaceIDs
 
     if ((prevLat !== currentLat && this.state.allPlaces.length > 0) || prevState.allPlaces.length !== this.state.allPlaces.length && this.state.auth.user.lat !== null){
       let setNewDistances = this.state.allPlaces.map(place => this.addDistanceToPlace(place))
       let sortedPlaces = this.sortByDistance(setNewDistances)
       this.setState({
-        allPlaces: sortedPlaces
+        allPlaces: sortedPlaces,
+         displayedPlaces: sortedPlaces.slice(0,10),
+         remainingPlaces: sortedPlaces.slice(11,-1),
       })
     }
 
@@ -119,6 +122,18 @@ class App extends Component {
       AuthAdapter.updateCurrentUser(this.state.auth)
       .then(res => console.log("response from updating user's address/lat/long", res))
     }
+
+    if (prevSavedPlaceIDs !== this.state.auth.user.savedPlaceIDs && this.state.allPlaces.length > 0) {
+      this.setState({
+        auth: {
+          user: {
+          ... this.state.auth.user,
+          savedPlaceList: this.state.allPlaces.filter(place => this.state.auth.user.savedPlaceIDs.map(savedPlace => savedPlace.place_id).includes(place.id))
+          }
+        }
+      })
+    }
+
   }
 
   getCurrentUser = () => {
@@ -139,9 +154,6 @@ class App extends Component {
             },
           isLoggedIn: true
           },
-
-          displayedSavedPlaces: this.filterSavedPlaces(res.saved_places.slice(0,10)),
-          remainingSavedPlaces: this.filterSavedPlaces(res.saved_places.slice(11,-1))
 
         })
       )
@@ -234,6 +246,7 @@ class App extends Component {
   }
 
   sortByDistance = (placesArray) => {
+    console.log("FIRING")
     return placesArray.sort(function(a,b){
       return a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0;
     })
@@ -271,18 +284,6 @@ class App extends Component {
       }
     }
 
-    loadMoreSavedPlaces = () => {
-        if (this.state.remainingSavedPlaces.length >= 10){
-          this.setState({
-            displayedSavedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces.splice(0,10))
-          })
-        } else if (this.state.remainingPlaces.length < 10 && this.state.remainingPlaces.length < 10) {
-          this.setState({
-            displayedSavedPlaces: this.state.displayedPlaces.concat(this.state.remainingPlaces),
-            remainingSavedPlaces: []
-          })
-        }
-      }
 
 
   render() {
