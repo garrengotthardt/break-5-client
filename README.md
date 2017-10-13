@@ -1,4 +1,4 @@
-### Break5 is a webapp that allows users to find food/drink options near them for under $5
+### Break5 is a web app that allows users to find food/drink options near them for under $5
 
 #### Visit: https://www.break5app.com
 
