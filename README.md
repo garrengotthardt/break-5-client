@@ -10,7 +10,7 @@ to provide the user with items under $5
 
 #### Screenshots:
 
-![map view](https://user-images.githubusercontent.com/1863593/31552304-149f61b0-b005-11e7-884c-32db5d2c9fcf.png)
+![map view](https://user-images.githubusercontent.com/1863593/31553472-9982fb8c-b008-11e7-95cb-f9e7c4fbdf10.png)
 Map View
 
 ![list view](https://user-images.githubusercontent.com/1863593/31553070-4273a1d0-b007-11e7-93d9-d188376f23ed.png)
