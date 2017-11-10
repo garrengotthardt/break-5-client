@@ -4,7 +4,7 @@ import PlaceMapPoint from './PlaceMapPoint'
 
 const ResultsMap = (props) => {
   return(
-    <div style={{width: '100%', height: '75vh', filter: 'grayscale(70%)'}}>
+    <div style={{width: '100%', height: '72vh', filter: 'grayscale(70%)'}}>
       <GoogleMapReact
         center={{lat: props.user.lat, lng: props.user.long}}
         defaultZoom={14}
